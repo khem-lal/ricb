@@ -1,0 +1,50 @@
+
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle class="title"> 
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Calculator</ion-title>
+    <ion-buttons right> 
+      <button ion-button icon-only>
+        <ion-icon  name="call"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <form method="post">
+    <ion-card>
+      <button (click)="openCalculator('credit')" ion-button block color="facebook" type="submit">
+        CREDIT CALCULATOR
+      </button>
+      <button (click)="openCalculator('installment')" ion-button block color="facebook" type="submit">
+        INSTALLMENT CALCULATOR
+      </button>
+      <button (click)="openCalculator('interest')" ion-button block color="facebook" type="submit">
+        INTEREST CALCULATOR
+      </button>
+    </ion-card>
+
+    <div [hidden]="!creditCalculator"> 
+      <ion-title>Credit Calculator</ion-title>
+      <iframe src="https://www.ricb.bt/calculator/credit.htm" class="ionframe">
+        <p>Your browser does not support iframes.</p>
+      </iframe>
+    </div>
+    <div [hidden]="!installmentCalculator"> 
+      <ion-title>Installment Calculator</ion-title>
+      <iframe src="https://www.ricb.bt/calculator/Installment.htm" class="ionframe">
+        <p>Your browser does not support iframes.</p>
+      </iframe>
+    </div>
+    <div [hidden]="!interestCalculator"> 
+      <ion-title>Interest Calculator</ion-title>
+      <iframe src="https://www.ricb.bt/calculator/interest.htm" class="ionframe">
+        <p>Your browser does not support iframes.</p>
+      </iframe>
+    </div>
+  </form>
+</ion-content>

@@ -1,0 +1,77 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Credit Investment</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-item *ngFor="let lifeDto of policyDtls" class="politem">
+    <label class="polstatus" style="text-align: center">Status : {{lifeDto.STATUS}}</label>
+    <ion-row> 
+        <ion-col col-5><strong>Account Holder </strong></ion-col>
+        <ion-col col-1>:</ion-col>
+        <ion-col col-6>{{lifeDto.ACCOUNT_HOLDER}}</ion-col>
+    </ion-row>
+    <ion-row> 
+        <ion-col col-5><strong>Loan Account No </strong></ion-col>
+        <ion-col col-1>:</ion-col> 
+        <ion-col col-6>{{lifeDto.ACCOUNT_NO}}</ion-col>
+    </ion-row>
+    <ion-row> 
+        <ion-col col-5><strong>Sanction Amount </strong></ion-col>
+        <ion-col col-1>:</ion-col> 
+        <ion-col col-6>{{lifeDto.SANC_AMT}}</ion-col>
+    </ion-row>
+    <ion-row> 
+        <ion-col col-5><strong>Expiry Date </strong></ion-col>
+        <ion-col col-1>:</ion-col> 
+        <ion-col col-6>{{lifeDto.EXP_DT}}</ion-col>
+    </ion-row>
+    <ion-row> 
+        <ion-col col-5><strong>Repayment Date </strong></ion-col>
+        <ion-col col-1>:</ion-col> 
+        <ion-col col-6>{{lifeDto.REPAY_DATE}}</ion-col>
+    </ion-row>
+    <ion-row> 
+        <ion-col col-5><strong>Term </strong></ion-col>
+        <ion-col col-1>:</ion-col> 
+        <ion-col col-6>{{lifeDto.TERM}}</ion-col>
+    </ion-row>
+    <ion-row> 
+        <ion-col col-5><strong>Interest Rate (%) </strong></ion-col>
+        <ion-col col-1>:</ion-col> 
+        <ion-col col-6>{{lifeDto.INT_RT}}</ion-col>
+    </ion-row>
+    <ion-row> 
+        <ion-col col-5><strong>EMI </strong></ion-col>
+        <ion-col col-1>:</ion-col> 
+        <ion-col col-6>{{lifeDto.EMI}}</ion-col>
+    </ion-row>
+    <ion-row> 
+        <ion-col col-5><strong>Repay Mode </strong></ion-col>
+        <ion-col col-1>:</ion-col> 
+        <ion-col col-6>{{lifeDto.REPAY_MODE}}</ion-col>
+    </ion-row>
+    <ion-row> 
+        <ion-col col-5><strong>Next Repayment </strong></ion-col>
+        <ion-col col-1>:</ion-col> 
+        <ion-col col-6>{{lifeDto.NEXT_REPAYMT}}</ion-col>
+    </ion-row>
+    </ion-item>
+    <ion-row> 
+        <ion-col text-center><strong>Amount To Pay </strong></ion-col>
+    </ion-row>
+    <ion-row> 
+      <ion-col col-12><strong> 
+        <ion-input type="number" class="textAmt" placeholder="Enter Amount" [(ngModel)]="amountToPay" round text-center></ion-input>
+      </strong></ion-col>
+  </ion-row>
+  <p></p>
+    <button ion-button block color="facebook" type="submit" (click)="confirmpayment()">
+      PROCEED TO PAY
+    </button>
+</ion-content>

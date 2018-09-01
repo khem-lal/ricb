@@ -1,0 +1,91 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title class="title">Choose your Policy Number</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form  method="post" [formGroup]="policyForm">
+    <div *ngFor="let policyNumber of policyNo" [hidden]="!lifeFlag">
+        <button (click)="policyDetails(policyNumber.POLICY_NO, 'life')" ion-button block color="facebook" type="submit">
+          {{policyNumber.POLICY_NO}} 
+        </button>
+    </div>
+    <div *ngFor="let policyNumber of policyNo" [hidden]="!creditFlag">
+      <button (click)="policyDetails(policyNumber.ACCOUNT_NO, 'credit')" ion-button block color="facebook" type="submit">
+        {{policyNumber.ACCOUNT_NO}} 
+      </button>
+    </div>
+    <div *ngFor="let policyNumber of policyNo" [hidden]="!generalFlag">
+        <button (click)="policyDetails(policyNumber.POL_NO, 'general')" ion-button block color="facebook" type="submit">
+          {{policyNumber.POL_NO}} 
+        </button>
+    </div>
+    <div [hidden]="!deferredFlag">
+        <ion-card>
+          <ion-card-header>  
+            Financial Security and Services Department
+          </ion-card-header>
+          <button (click)="policyDetails('', 'immediate')" ion-button default color="facebook" type="submit">
+            IMMEDIATE ANNUITY SCHEME
+          </button>
+          <button (click)="policyDetails('', 'deferred')" ion-button block color="facebook" type="submit">
+              DEFERRED ANNUITY SCHEME
+          </button>
+        </ion-card>
+    </div>
+    <div *ngFor="let policyNumber of policyNo" [hidden]="!deferredPolFlag">
+        <button (click)="policyDetails(policyNumber.POLICYNO, 'deferreddetails')" ion-button icon-end block color="facebook" type="submit">
+          {{policyNumber.POLICYNO}} <ion-icon name="arrow-dropright"></ion-icon>
+
+        </button>
+    </div>
+    <div *ngFor="let policyNumber of policyNo" [hidden]="!immediatePolFlag">
+        <button (click)="policyDetails(policyNumber.POLNO, 'immediatedetails')" ion-button icon-end block color="facebook" type="submit">
+          {{policyNumber.POLNO}} <ion-icon name="arrow-dropright"></ion-icon>
+
+        </button>
+    </div>
+    <div [hidden]="!othersFlag">
+      <ion-thumbnail item-start center>
+        <img class="logo" src="assets/imgs/logo.png"/>
+      </ion-thumbnail>
+      <p></p>
+        <ion-card>
+          <ion-card-header>  
+            PAYABLE ACCOUNTS
+          </ion-card-header>
+          <button (click)="policyDetails('', 'creditOthers')" ion-button default color="facebook" type="submit">
+            CREDIT INVESTMENT
+          </button>
+          <button (click)="policyDetails('', 'lifeOthers')" ion-button block color="facebook" type="submit">
+            LIFE INSURANCE
+          </button>
+          <button (click)="policyDetails('', 'deferredOthers')" ion-button block color="facebook" type="submit">
+            DEFERRED ANNUITY
+          </button>
+        </ion-card>
+    </div>
+    <div [hidden]="!reportFlag">
+        <ion-thumbnail item-start center>
+          <img class="logo" src="assets/imgs/logo.png"/>
+        </ion-thumbnail>
+        <p></p>
+          <ion-card>
+            
+            <button (click)="policyDetails('', 'loanReport')" ion-button default color="facebook" type="submit">
+              LOAN STATEMENT
+            </button>
+            <button (click)="policyDetails('', 'ppfReport')" ion-button block color="facebook" type="submit">
+              PRIVATE PROVIDENT FUND
+            </button>
+            <button (click)="policyDetails('', 'gisReport')" ion-button block color="facebook" type="submit">
+              GROUP INSURANCE SCHEME
+            </button>
+          </ion-card>
+      </div>
+    </form>
+</ion-content>

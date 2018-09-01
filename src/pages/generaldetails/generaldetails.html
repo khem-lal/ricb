@@ -1,0 +1,51 @@
+
+<ion-header>
+
+    <ion-navbar>
+      <ion-title>General Insurance</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+    <ion-item *ngFor="let genDto of policyDtls" class="politem">
+      <ion-row> 
+          <ion-col col-5><strong>POLICY TYPE </strong></ion-col>
+          <ion-col col-1>:</ion-col>
+          <ion-col col-6>{{genDto.POL_DEPT_CODE}}</ion-col>
+      </ion-row>
+      <ion-row> 
+          <ion-col col-5><strong>POLICY NO </strong></ion-col>
+          <ion-col col-1>:</ion-col> 
+          <ion-col col-6>{{genDto.POL_NO}}</ion-col>
+      </ion-row>
+      <ion-row> 
+          <ion-col col-5><strong>SUM INSURED </strong></ion-col>
+          <ion-col col-1>:</ion-col> 
+          <ion-col col-6>{{genDto.SUM_INSURED}}</ion-col>
+      </ion-row>
+      <ion-row> 
+          <ion-col col-5><strong>INCEPTION DATE </strong></ion-col>
+          <ion-col col-1>:</ion-col> 
+          <ion-col col-6>{{genDto.INCEPTION_DATE}}</ion-col>
+      </ion-row>
+      <ion-row> 
+          <ion-col col-5><strong>EXPIRY DATE </strong></ion-col>
+          <ion-col col-1>:</ion-col> 
+          <ion-col col-6>{{genDto.EXPIRY_DATE}}</ion-col>
+      </ion-row>
+      <ion-row> 
+          <ion-col col-5><strong>STATUS </strong></ion-col>
+          <ion-col col-1>:</ion-col> 
+          <ion-col col-6>{{genDto.STATUS}}</ion-col>
+      </ion-row>
+      <ion-row> 
+          <ion-col col-5><strong>PREMIUM </strong></ion-col>
+          <ion-col col-1>:</ion-col> 
+          <ion-col col-6>{{genDto.PREMIUM}}</ion-col>
+      </ion-row>
+      </ion-item>
+      
+  </ion-content>
+  

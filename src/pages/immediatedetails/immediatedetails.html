@@ -1,0 +1,55 @@
+<!--
+  Generated template for the ImmediatedetailsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>IMMEDIATE ANNUITY DETAILS</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-item *ngFor="let lifeDto of policyDtls" class="politem">
+    <ion-row> 
+        <ion-col col-5><strong>Name </strong></ion-col>
+        <ion-col col-1>:</ion-col>
+        <ion-col col-6>{{lifeDto.CUSTNAME}}</ion-col>
+    </ion-row>
+    <ion-row> 
+        <ion-col col-5><strong>ADDRESS </strong></ion-col>
+        <ion-col col-1>:</ion-col> 
+        <ion-col col-6>{{lifeDto.CURRADDRESS}}</ion-col>
+    </ion-row>
+    <ion-row> 
+        <ion-col col-5><strong>Policy Number </strong></ion-col>
+        <ion-col col-1>:</ion-col> 
+        <ion-col col-6>{{lifeDto.POLNO}}</ion-col>
+    </ion-row>
+    <ion-row> 
+        <ion-col col-5><strong>CID Number</strong></ion-col>
+        <ion-col col-1>:</ion-col> 
+        <ion-col col-6>{{lifeDto.CID}}</ion-col>
+    </ion-row>
+    <ion-row> 
+        <ion-col col-5><strong>Sum Assured </strong></ion-col>
+        <ion-col col-1>:</ion-col> 
+        <ion-col col-6>{{lifeDto.SUMASSR}}</ion-col>
+    </ion-row>
+    <ion-row> 
+        <ion-col col-5><strong>Policy Date </strong></ion-col>
+        <ion-col col-1>:</ion-col> 
+        <ion-col col-6>{{lifeDto.POLDATE}}</ion-col>
+    </ion-row>
+    <ion-row> 
+        <ion-col col-5><strong>Amount </strong></ion-col>
+        <ion-col col-1>:</ion-col> 
+        <ion-col col-6>{{lifeDto.PREAMT}}</ion-col>
+
+    </ion-row>
+    </ion-item>
+</ion-content>

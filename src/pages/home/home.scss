@@ -1,0 +1,26 @@
+page-home {
+    .toolbar-background {
+        background-color: #043881;
+        color: #ffffff !important;
+    }
+    .title {
+        color: #ffffff !important;
+    }
+    .toolbar-title-md  {
+        color: #ffffff !important;
+    }
+    .bar-buttons-md[right] {
+        color: #ffffff !important;
+    } 
+    .logo {
+        width: 60%;
+        margin: 0 auto;
+    }
+    .alignRight{
+		font-size: 11px;
+		float: right;
+    }
+    .alignLeft{
+		font-size: 11px;
+	}
+}

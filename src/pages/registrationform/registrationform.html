@@ -1,0 +1,57 @@
+<!--
+  Generated template for the RegistrationformPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>User Registration</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-thumbnail item-start center>
+    <img class="logo" src="assets/imgs/logo.png"/>
+  </ion-thumbnail>
+  <p></p>
+  <ion-list class="registration" [hidden]="!regFlag">
+    <form (submit)="registerUser()" method="post" [formGroup]="registrationForm">
+      
+      <ion-item>
+        <ion-input type="text" [(ngModel)]="uname" formControlName="uname" placeholder="Name" round></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="password" [(ngModel)]="password" formControlName="password" placeholder="Password" round></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="number" [(ngModel)]="phoneNo" formControlName="phoneNo" placeholder="Phone Number" round></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="email" [(ngModel)]="email" formControlName="email" placeholder="Email" round></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="number" [(ngModel)]="cidNumber" formControlName="cidNumber" placeholder="Citizen / Passport Number" round></ion-input>
+      </ion-item>
+      <p></p>
+      <button ion-button block color="facebook" type="submit">
+        REGISTER
+      </button>
+
+    </form>
+  </ion-list>
+
+  <div class="registration" [hidden]="!otpFlag">
+    <ion-title>OTP Verification</ion-title>
+    <ion-item>
+      <label>Enter OTP</label>
+      <ion-input type="text" [(ngModel)]="otp" placeholder="Enter OTP" round></ion-input>
+    </ion-item>
+    <button ion-button block color="facebook" type="submit" (click)="verifyOTP()">
+      Done
+    </button>
+  </div>
+</ion-content>

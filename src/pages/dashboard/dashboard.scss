@@ -1,0 +1,31 @@
+page-dashboard {
+    .logo{
+        margin: 0 auto;
+    }
+    .text{
+        text-align: center;
+    }
+    .pics{
+        float: left;
+        font-size: 8px;
+        padding: 5px;
+        width: 90px;
+        text-align: center;
+    }
+    .buttoncolor{
+        background-color: darkblue;
+        color: #ffffff;
+        
+    }
+    .alignRight{
+		font-size: 11px;
+		float: right;
+    }
+    .button {
+        float: left;
+    }
+
+    .error{
+        background-color: red;
+    }
+}

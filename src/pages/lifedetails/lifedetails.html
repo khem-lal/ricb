@@ -1,0 +1,100 @@
+
+<ion-header>
+
+        <ion-navbar>
+          <ion-title>Life Insurance</ion-title>
+        </ion-navbar>
+      
+      </ion-header>
+      
+      
+      <ion-content padding>
+          <ion-item *ngFor="let lifeDto of policyDtls" class="politem">
+            <label class="polstatus" text-center>{{lifeDto.POLSTATUS}}</label>
+            <ion-row> 
+                <ion-col col-5><strong>Policy Number </strong></ion-col>
+                <ion-col col-1>:</ion-col>
+                <ion-col col-6>{{lifeDto.POLICY_NO}}</ion-col>
+            </ion-row>
+            <ion-row> 
+                <ion-col col-5><strong>Incept Date </strong></ion-col>
+                <ion-col col-1>:</ion-col> 
+                <ion-col col-6>{{lifeDto.INCEPTION_DATE}}</ion-col>
+            </ion-row>
+            <ion-row> 
+                <ion-col col-5><strong>Maturity Date </strong></ion-col>
+                <ion-col col-1>:</ion-col> 
+                <ion-col col-6>{{lifeDto.MATURITY_DATE}}</ion-col>
+            </ion-row>
+            <ion-row> 
+                <ion-col col-5><strong>Sum Assured </strong></ion-col>
+                <ion-col col-1>:</ion-col> 
+                <ion-col col-6>{{lifeDto.SUM_ASSURED}}</ion-col>
+            </ion-row>
+            <ion-row> 
+                <ion-col col-5><strong>Premium </strong></ion-col>
+                <ion-col col-1>:</ion-col> 
+                <ion-col col-6>{{lifeDto.PREMIUM}}</ion-col>
+            </ion-row>
+            <ion-row> 
+                <ion-col col-5><strong>Mode of Payment </strong></ion-col>
+                <ion-col col-1>:</ion-col> 
+                <ion-col col-6>{{lifeDto.P_MODE}}</ion-col>
+            </ion-row>
+            <ion-row> 
+                <ion-col col-5><strong>Last Paid Date </strong></ion-col>
+                <ion-col col-1>:</ion-col> 
+                <ion-col col-6>{{lifeDto.LAST_PAID_DATE}}</ion-col>
+            </ion-row>
+            <ion-row> 
+                <ion-col col-5><strong>Next Repay </strong></ion-col>
+                <ion-col col-1>:</ion-col> 
+                <ion-col col-6>{{lifeDto.NEXT_REPAY}}</ion-col>
+            </ion-row>
+            <ion-row> 
+                <ion-col col-5><strong>Term </strong></ion-col>
+                <ion-col col-1>:</ion-col> 
+                <ion-col col-6>{{lifeDto.TERM}}</ion-col>
+            </ion-row>
+        </ion-item>
+            <ion-row [hidden]="!monthlyFlag">
+                <ion-label  class="politem" text-left>You want to pay for</ion-label>
+                  <ion-select [(ngModel)]="installment" #C (ionChange)="calculateInstallment(C.value)">
+                      <ion-option value="s" selected>Select Installment</ion-option>
+                      <ion-option value="1">1 month</ion-option>
+                      <ion-option value="2">2 months</ion-option>
+                      <ion-option value="3">3 months</ion-option>
+                      <ion-option value="4">4 months</ion-option>
+                      <ion-option value="5">5 months</ion-option>
+                      <ion-option value="6">6 months</ion-option>
+                      <ion-option value="7">7 months</ion-option>
+                      <ion-option value="8">8 months</ion-option>
+                      <ion-option value="9">9 months</ion-option>
+                      <ion-option value="10">10 months</ion-option>
+                      <ion-option value="11">11 months</ion-option>
+                      <ion-option value="12">12 months</ion-option>
+                  </ion-select>
+            </ion-row>
+      
+            <ion-row [hidden]="!quarterlyFlag">
+                <ion-label  class="politem">You want to pay for</ion-label>
+                  <ion-select [(ngModel)]="installment" #C (ionChange)="calculateInstallment(C.value)">
+                      <ion-option value="s">Select Installment</ion-option>
+                      <ion-option value="1">1 Quarter</ion-option>
+                      <ion-option value="2">2 Quarter</ion-option>
+                      <ion-option value="3">3 Quarter</ion-option>
+                      <ion-option value="4">4 Quarter</ion-option>
+                  </ion-select>
+            </ion-row>
+            <ion-row> 
+                <ion-col col-5><strong>Amount To Pay </strong></ion-col>
+                <ion-col col-1>:</ion-col> 
+                <ion-col col-6>Nu. {{amountToPay}}</ion-col>
+            </ion-row>
+            <p></p>
+            <button ion-button block color="facebook" type="submit" (click)="confirmpayment()">
+                PROCEED TO PAY
+            </button> 
+             
+      </ion-content>
+      

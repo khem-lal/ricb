@@ -1,0 +1,21 @@
+page-feedback {
+    .rounded{
+        border: 1px solid #000;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        border-radius: 10px;
+        margin-bottom: 10px; 
+    }
+    .roundedbutton{
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        border-radius: 10px;
+        margin-bottom: 10px; 
+    }
+    #height{
+        height: 100px;
+    }
+    .mandatory{
+        color: red;
+    }
+}

@@ -1,0 +1,70 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>DEFERRED ANNUITY SCHEME</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-item *ngFor="let lifeDto of policyDtls" class="politem">
+    <ion-row> 
+        <ion-col col-5><strong>Name </strong></ion-col>
+        <ion-col col-1>:</ion-col>
+        <ion-col col-6>{{lifeDto.CUSTNAME}}</ion-col>
+    </ion-row>
+    <ion-row> 
+        <ion-col col-5><strong>Policy Number </strong></ion-col>
+        <ion-col col-1>:</ion-col> 
+        <ion-col col-6>{{lifeDto.PLOICY_NO}}</ion-col>
+    </ion-row>
+    <ion-row> 
+        <ion-col col-5><strong>Inception Date </strong></ion-col>
+        <ion-col col-1>:</ion-col> 
+        <ion-col col-6>{{lifeDto.PLOICY_DATE}}</ion-col>
+    </ion-row>
+    <ion-row> 
+        <ion-col col-5><strong>Close Date </strong></ion-col>
+        <ion-col col-1>:</ion-col> 
+        <ion-col col-6>{{lifeDto.CLOSE_DATE}}</ion-col>
+    </ion-row>
+    <ion-row> 
+        <ion-col col-5><strong>Term (Months) </strong></ion-col>
+        <ion-col col-1>:</ion-col> 
+        <ion-col col-6>{{lifeDto.PREMIUMTYPE}}</ion-col>
+    </ion-row>
+    <ion-row> 
+        <ion-col col-5><strong>Premium Amount </strong></ion-col>
+        <ion-col col-1>:</ion-col> 
+        <ion-col col-6>{{lifeDto.PREMIUMAMOUNT}}</ion-col>
+    </ion-row>
+    <ion-row> 
+        <ion-col col-5><strong>Amount </strong></ion-col>
+        <ion-col col-1>:</ion-col> 
+        <ion-col col-6>{{lifeDto.SUMASSURED}}</ion-col>
+        <!-- <ion-input [hidden] class="premiumAmount"></ion-input> -->
+
+    </ion-row>
+    </ion-item>
+    <ion-row>
+      <ion-label  class="politem" text-left>You want to pay for</ion-label>
+        <ion-select [(ngModel)]="installment" #C (ionChange)="calculateInstallment(C.value)">
+            <ion-option value="s" selected>Select Installment</ion-option>
+            <ion-option value="1">1 month</ion-option>
+        </ion-select>
+  </ion-row>
+    <ion-row> 
+        <ion-col text-center><strong>Amount To Pay </strong></ion-col>
+    </ion-row>
+    <ion-row> 
+      <ion-col col-12><strong> 
+        <ion-input type="number" class="textAmt" placeholder="Enter Amount" [(ngModel)]="amountToPay" round text-center></ion-input>
+      </strong></ion-col>
+  </ion-row>
+  <p></p>
+    <button ion-button block color="facebook" type="submit" (click)="confirmpayment()">
+      PROCEED TO PAY
+    </button>
+</ion-content>
