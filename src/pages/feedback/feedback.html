@@ -27,14 +27,14 @@
         <ion-title><strong> RICB FEEDBACK FORM</strong></ion-title>
     </ion-item>
     <ion-item class="rounded">
-      <ion-input type="text" placeholder="Subject" round text-center></ion-input>
+      <ion-input type="text" placeholder="Subject" round text-center [(ngModel)]="subject"></ion-input>
     </ion-item>
     <ion-item class="rounded" id="height">
-      <ion-textarea type="text" placeholder="Message" round text-center></ion-textarea>
+      <ion-textarea type="text" placeholder="Message" round text-center [(ngModel)]="message"></ion-textarea>
       
     </ion-item>
     <p><label class="mandatory">* All fields are mandatory.</label></p>
-    <button ion-button block color="facebook" type="submit" class="roundedbutton">
+    <button (click)="sendEmail()" ion-button block color="facebook" type="submit" class="roundedbutton">
       Submit
     </button>
 </ion-content>

@@ -69,6 +69,9 @@ $colors: (
 // then be future customized. This import comes last
 // so that the above variables are used and Ionic's
 // default are overridden.
+$toast-ios-background:(#dd1919);
+$toast-md-background:(#dd1919);
+$toast-wp-background:(#dd1919);
 
 @import "ionic.theme.default";
 

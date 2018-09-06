@@ -1,42 +1,73 @@
 
 <ion-content padding>
   <ion-thumbnail item-start center>
-    <img class="logo" src="assets/imgs/logo.png" width="50"/><br />
+    <img class="logo" src="assets/imgs/logo.png" width="50%"/><br />
     <p class="text">CHOOSE YOUR RELATIONSHIP WITH RICB</p>
   </ion-thumbnail>
 
-  <ion-thumbnail item-start center>
+  <!-- <ion-thumbnail item-start center>
     <div class="pics" (click)="creditpage()">
-      <img class="logo" src="assets/imgs/creditinvestment.PNG" width="70"/>
+      <img src="assets/imgs/creditinvestment.PNG" width="70"/>
       <p class="textsmall">CREDIT INVESTMENT</p>
     </div>
     <div class="pics" (click)="lifepage()">
-      <img class="logo" src="assets/imgs/lifeinsurance.PNG" width="70"/>
+      <img src="assets/imgs/lifeinsurance.PNG" width="70"/>
       <p class="textsmall">LIFE INSURANCE</p>
     </div>
     <div class="pics" (click)="generalpage()">
-      <img class="logo" src="assets/imgs/generalinsurance.png" width="70"/>
+      <img src="assets/imgs/generalinsurance.PNG" width="70"/>
       <p class="textsmall">GENERAL INSURANCE</p>
     </div>
 
-  </ion-thumbnail>
-  <ion-thumbnail item-start center>
+  </ion-thumbnail> -->
+  <ion-row class="image-row"> 
+    <ion-col col-4>
+          <img class="pdmsicon" src="assets/imgs/creditinvestment.PNG" (click)="creditpage()" />
+        <p>CREDIT INVESTMENT</p>
+    </ion-col>
+    <ion-col col-4>
+          <img class="pdmsicon" src="assets/imgs/lifeinsurance.PNG" (click)="lifepage()" />
+        <p>LIFE INSURANCE</p>
+    </ion-col>
+    <ion-col col-4>    
+          <img class="pdmsicon" src="assets/imgs/generalinsurance.PNG" (click)="generalpage()" />
+        <p>GENERAL INSURANCE</p>
+    </ion-col>
+    <ion-col col-4>    
+        <img class="pdmsicon" src="assets/imgs/fssd.PNG" (click)="annuitypage()" >
+      <p>ANNUITY SCHEME</p>
+    </ion-col>
+    <ion-col col-4>    
+        <img class="pdmsicon" src="assets/imgs/payothers.PNG" (click)="payotherspage()" />
+      <p>PAY FOR OTHERS</p>
+    </ion-col>
+    <ion-col col-4>    
+        <img class="pdmsicon" src="assets/imgs/report.PNG" (click)="report()" />
+      <p>REPORT</p>
+    </ion-col>
+  </ion-row>
+  <!-- <ion-thumbnail item-start center>
       <div class="pics" (click)="annuitypage()">
-          <img class="logo" src="assets/imgs/fssd.png" width="70"/>
+          <img src="assets/imgs/fssd.PNG" width="70"/>
           <p class="textsmall">ANNUITY SCHEME</p>
         </div>
         <div class="pics" (click)="payotherspage()">
-          <img class="logo" src="assets/imgs/payothers.png" width="70"/>
+          <img src="assets/imgs/payothers.PNG" width="70"/>
           <p class="textsmall">PAY FOR OTHERS</p>
         </div>
         <div class="pics" (click)="report()">
-          <img class="logo" src="assets/imgs/report.png" width="70"/>
+          <img src="assets/imgs/report.PNG" width="70"/>
           <p class="textsmall">REPORT</p>
         </div>
-  </ion-thumbnail>
-  
-  <div class="button">
-    <button (click)="goToProfilePage()"  round ion-button color="facebook" width="100px">MY PROFILE</button>
-    <button (click)="logoutPage()" round ion-button  color="facebook" width="100px"><strong>LOGOUT</strong></button>
-  </div>
+  </ion-thumbnail> -->
+  <ion-footer>
+    <ion-row class="">
+        <ion-col col-6> 
+          <button (click)="goToProfilePage()" block ion-button color="facebook" width="50%">MY PROFILE</button>
+        </ion-col>
+        <ion-col col-6> 
+          <button (click)="logoutPage()" ion-button block color="facebook" width="50%">LOGOUT</button>
+        </ion-col>
+    </ion-row>
+  </ion-footer>
 </ion-content>

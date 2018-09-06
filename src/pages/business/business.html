@@ -22,29 +22,15 @@
 
 <ion-content padding>
     <form method="post">
-        <button  ion-button block color="facebook" type="submit">
-          Life Insurance Product
-        </button>
-        <button  ion-button block color="facebook" type="submit">
-          General Insurance Products
-        </button>
-        <button  ion-button block color="facebook" type="submit">
-          Financial Security and Social Services
-        </button>
-        <button  ion-button block color="facebook" type="submit">
-          Credit and Investment
-        </button>
-        <button  ion-button block color="facebook" type="submit">
-          Corporate Social Responsibility (CSR)
-        </button>
-        <button  ion-button block color="facebook" type="submit">
-          Reinsurance Services
-        </button>
-        <button  ion-button block color="facebook" type="submit">
-          Acturial Services
-        </button>
-        <button  ion-button block color="facebook" type="submit">
-          RICB Securities
-        </button>
+        <div *ngFor="let businessDataDTO of businessData" class="businessData" [hidden]="!businessFlag">
+          <button (click)="businessDetails(businessDataDTO.id)" ion-button icon-end block color="facebook" type="submit">
+            {{businessDataDTO.business_name}} <ion-icon name="arrow-dropright"></ion-icon>
+          </button>
+        </div>
     </form>
+    <div *ngFor="let businessDataDTO of businessData" class="lob" [hidden]="!detailsFlag">
+      <ion-card>
+        <ion-item text-wrap>{{businessDataDTO.contents}}</ion-item>
+      </ion-card>
+    </div>
 </ion-content>

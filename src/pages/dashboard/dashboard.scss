@@ -10,6 +10,7 @@ page-dashboard {
         font-size: 8px;
         padding: 5px;
         width: 90px;
+        //margin-left: 10px;
         text-align: center;
     }
     .buttoncolor{
@@ -28,4 +29,16 @@ page-dashboard {
     .error{
         background-color: red;
     }
+    .pdmsicon{
+		//width: 45px;
+		margin: 0 auto;
+    }
+    
+	.image-row p{
+        text-align: center;
+        font-size: 8px;
+		-webkit-background-size: 100%;
+    	-moz-background-size: cover;
+    	background-size: cover;
+	}
 }

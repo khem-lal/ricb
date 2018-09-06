@@ -4,12 +4,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { AboutusPage } from '../pages/aboutus/aboutus';
 import { CalculatorPage } from '../pages/calculator/calculator';
 import { BusinessPage } from '../pages/business/business';
 import { ContactusPage } from '../pages/contactus/contactus';
 import { FeedbackPage } from '../pages/feedback/feedback';
+import { SqliteProvider } from '../providers/sqlite/sqlite';
 
 @Component({
   templateUrl: 'app.html'
@@ -21,7 +21,7 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public sqlite: SqliteProvider) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -43,6 +43,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      //this.sqlite.openDb();
     });
   }
 

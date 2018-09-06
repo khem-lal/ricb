@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController, Platform, Nav } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 import { PolicynumberPage } from '../policynumber/policynumber';
 import { HomePage } from '../home/home';
 import { Http } from '@angular/http';
+import { UserprofilePage } from '../userprofile/userprofile';
 
 /**
  * Generated class for the DashboardPage page.
@@ -25,9 +26,18 @@ export class DashboardPage {
   public policyNo: any[];
   data: any[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, 
+  constructor(platform: Platform, public navCtrl: NavController, public nav: Nav, public navParams: NavParams, public http: Http, 
     public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
     this.cidNo = navParams.get('param');
+    platform.registerBackButtonAction((event) =>{
+      let view = this.nav.getActive();
+      if (view.component.name == "Dashboard") {
+        this.navCtrl.push(HomePage);
+      }
+      else{
+        //platform.exitApp();
+      }
+    })
   }
 
   lifepage() {
@@ -161,6 +171,10 @@ export class DashboardPage {
     /*setTimeout(() => {
       loading.dismiss();
     }, 5000); */
+  }
+
+  goToProfilePage(){
+    this.navCtrl.push(UserprofilePage, {cid: this.cidNo});
   }
   
 

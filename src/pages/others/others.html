@@ -22,7 +22,7 @@
               <p></p> 
             </ion-item>
           </ion-list> 
-            <button (click)="policyDetails('credit')" ion-button block color="facebook" type="submit">
+            <button (click)="policyDetails('credit')" ion-button block color="facebook" type="submit" autocapitalize="characters">
               VIEW
             </button>
           
@@ -30,11 +30,11 @@
         <div [hidden]="!lifeFlag">
           <ion-list>
             <ion-item>
-              <ion-input type="text" [(ngModel)]="accountNo"  placeholder="Enter Policy No:" round text-center></ion-input>
+              <ion-input type="text" [(ngModel)]="accountNo"  placeholder="Enter Policy No:" round text-center autocapitalize="characters"></ion-input>
               <p></p> 
             </ion-item>
           </ion-list> 
-          <button (click)="policyDetails('life')" ion-button block color="facebook" type="submit">
+          <button (click)="policyDetails('life')" ion-button block color="facebook" type="submit" autocapitalize="characters">
             VIEW
           </button>
           

@@ -22,19 +22,24 @@
     <form (submit)="registerUser()" method="post" [formGroup]="registrationForm">
       
       <ion-item>
-        <ion-input type="text" [(ngModel)]="uname" formControlName="uname" placeholder="Name" round></ion-input>
+        <ion-label color="primary" floating>Name</ion-label>
+        <ion-input type="text" [(ngModel)]="uname" formControlName="uname" round></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input type="password" [(ngModel)]="password" formControlName="password" placeholder="Password" round></ion-input>
+        <ion-label color="primary" floating>Password</ion-label>
+        <ion-input type="password" [(ngModel)]="password" formControlName="password" round></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input type="number" [(ngModel)]="phoneNo" formControlName="phoneNo" placeholder="Phone Number" round></ion-input>
+        <ion-label color="primary" floating>Phone Number</ion-label>
+        <ion-input type="number" [(ngModel)]="phoneNo" formControlName="phoneNo" round maxlength="8"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input type="email" [(ngModel)]="email" formControlName="email" placeholder="Email" round></ion-input>
+        <ion-label color="primary" floating>Email</ion-label>
+        <ion-input type="email" [(ngModel)]="email" formControlName="email" round></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input type="number" [(ngModel)]="cidNumber" formControlName="cidNumber" placeholder="Citizen / Passport Number" round></ion-input>
+        <ion-label color="primary" floating>Citizen / Passport Number</ion-label>
+        <ion-input type="number" [(ngModel)]="cidNumber" formControlName="cidNumber" round></ion-input>
       </ion-item>
       <p></p>
       <button ion-button block color="facebook" type="submit">
@@ -47,8 +52,8 @@
   <div class="registration" [hidden]="!otpFlag">
     <ion-title>OTP Verification</ion-title>
     <ion-item>
-      <label>Enter OTP</label>
-      <ion-input type="text" [(ngModel)]="otp" placeholder="Enter OTP" round></ion-input>
+      <label color="primary" floating>Enter OTP</label>
+      <ion-input type="number" [(ngModel)]="otp" round></ion-input>
     </ion-item>
     <button ion-button block color="facebook" type="submit" (click)="verifyOTP()">
       Done

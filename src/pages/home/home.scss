@@ -22,5 +22,11 @@ page-home {
     }
     .alignLeft{
 		font-size: 11px;
-	}
+    }
+    .errorMsg{
+       > div{
+        background: #ffffff !important;
+        color: red !important;
+       }
+    }
 }

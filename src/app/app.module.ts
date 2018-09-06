@@ -26,6 +26,11 @@ import { GeneraldetailsPage } from '../pages/generaldetails/generaldetails';
 import { DeferreddetailsPage } from '../pages/deferreddetails/deferreddetails';
 import { ImmediatedetailsPage } from '../pages/immediatedetails/immediatedetails';
 import { OthersPage } from '../pages/others/others';
+import { EmailComposer } from '@ionic-native/email-composer';
+import { CallNumber } from '@ionic-native/call-number';
+import { ForgotpasswordPage } from '../pages/forgotpassword/forgotpassword';
+import { SqliteProvider } from '../providers/sqlite/sqlite';
+import { UserprofilePage } from '../pages/userprofile/userprofile';
 
 @NgModule({
   declarations: [
@@ -47,7 +52,9 @@ import { OthersPage } from '../pages/others/others';
     GeneraldetailsPage,
     DeferreddetailsPage,
     ImmediatedetailsPage,
-    OthersPage
+    OthersPage,
+    ForgotpasswordPage,
+    UserprofilePage
   ],
   imports: [
     BrowserModule,
@@ -74,13 +81,18 @@ import { OthersPage } from '../pages/others/others';
     GeneraldetailsPage,
     DeferreddetailsPage,
     ImmediatedetailsPage,
-    OthersPage
+    OthersPage,
+    ForgotpasswordPage,
+    UserprofilePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     InAppBrowser,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    EmailComposer,
+    CallNumber,
+    SqliteProvider
     
   ]
 })
