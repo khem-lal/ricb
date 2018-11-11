@@ -1,128 +1,298 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title class="title">Choose your Policy Number</ion-title>
+  <ion-navbar hideBackButton>
+
+    <button ion-button menuToggle class=""> 
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title class="title" [hidden]="!policyTitle">Choose your Policy</ion-title>
+    <ion-title class="title" [hidden]="!creditTitle">Choose your Loan Account</ion-title>
+    <ion-title class="title" [hidden]="!payothersTitle">Pay For Others</ion-title>
+    <ion-title class="title" [hidden]="!reportTitle">Choose Report</ion-title>
+    
+    <ion-buttons right>
+        <button class="back-button disable-hover bar-button bar-button-ios back-button-ios bar-button-default bar-button-default-ios show-back-button" 
+          ion-button="bar-button" ng-reflect-klass="back-button" navPop>
+          <span class="button-inner">
+            <ion-icon class="back-button-icon icon" role="img" 
+            aria-label="arrow back" ng-reflect-klass="back-button-icon"  
+            ng-reflect-name="arrow-back">
+          </ion-icon>
+            <span class="back-button-text" style="transform: translateX(0px);" ng-reflect-klass="back-button-text" ng-reflect-ng-class="back-button-text-ios">Back</span></span><div class="button-effect"></div></button>
+      </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  
   <form  method="post" [formGroup]="policyForm">
+    <ion-list>
     <div *ngFor="let policyNumber of policyNo" [hidden]="!lifeFlag">
-        <button (click)="policyDetails(policyNumber.POLICY_NO, 'life')" ion-button block color="facebook" type="submit">
-          {{policyNumber.POLICY_NO}} 
-        </button>
+        <!-- <button (click)="policyDetails(policyNumber.POLICY_NO, 'life')" ion-button block color="facebook" type="submit">
+          {{policyNumber.POLICY_NO}}
+        </button> -->
+          <div text-left (click)="policyDetails(policyNumber.POLICY_NO, 'life')">
+            <ion-item color="primary">
+              <p>
+                <span (click)="policyDetails(policyNumber.POLICY_NO, 'life')"> {{policyNumber.POLICY_NO}}  <ion-icon name="arrow-forward"  end></ion-icon></span>
+              </p>
+            </ion-item>            
+          </div>
     </div>
-    <div *ngFor="let policyNumber of policyNo" [hidden]="!creditFlag">
-      <button (click)="policyDetails(policyNumber.ACCOUNT_NO, 'credit')" ion-button block color="facebook" type="submit">
-        {{policyNumber.ACCOUNT_NO}} 
-      </button>
-    </div>
-    <div *ngFor="let policyNumber of policyNo" [hidden]="!generalFlag">
-        <button (click)="policyDetails(policyNumber.POL_NO, 'general')" ion-button block color="facebook" type="submit">
-          {{policyNumber.POL_NO}} 
-        </button>
-    </div>
+    </ion-list>
+    <ion-list>
+      <div *ngFor="let policyNumber of policyNo" [hidden]="!creditFlag">
+        <!-- <button (click)="policyDetails(policyNumber.ACCOUNT_NO, 'credit')" ion-button block color="facebook" type="submit">
+          {{policyNumber.ACCOUNT_NO}} 
+        </button> -->
+        <div text-left (click)="policyDetails(policyNumber.ACCOUNT_NO, 'credit')">
+          <ion-item color="primary">
+            <p>
+              <span (click)="policyDetails(policyNumber.ACCOUNT_NO, 'credit')"> {{policyNumber.ACCOUNT_NO}}  <ion-icon name="arrow-forward"  end></ion-icon></span>
+            </p>
+          </ion-item>            
+        </div>
+      </div>
+    </ion-list>
+    <ion-list>
+      <div *ngFor="let policyNumber of policyNo" [hidden]="!generalFlag">
+          <!-- <button (click)="policyDetails(policyNumber.POL_NO, 'general')" ion-button block color="facebook" type="submit">
+            {{policyNumber.POL_NO}} 
+          </button> -->
+          <div text-left (click)="policyDetails(policyNumber.POL_NO, 'general')">
+            <ion-item color="primary">
+              <p>
+                <span (click)="policyDetails(policyNumber.POL_NO, 'general')"> {{policyNumber.POL_NO}}  <ion-icon name="arrow-forward"  end></ion-icon></span>
+              </p>
+            </ion-item>            
+          </div>
+      </div>
+    </ion-list>
     <div [hidden]="!deferredFlag">
+        <ion-thumbnail item-start center>
+            <img class="logo" src="assets/imgs/logo.png"/>
+          </ion-thumbnail>
+          <p></p>
         <ion-card>
-          <ion-card-header>  
-            Financial Security and Services Department
+          <ion-card-header text-wrap>  
+            Financial Security and Services
           </ion-card-header>
-          <button (click)="policyDetails('', 'immediate')" ion-button default color="facebook" type="submit">
+          
+          <!-- <button (click)="policyDetails('', 'immediate')" ion-button block color="facebook" type="submit">
             IMMEDIATE ANNUITY SCHEME
           </button>
           <button (click)="policyDetails('', 'deferred')" ion-button block color="facebook" type="submit">
               DEFERRED ANNUITY SCHEME
-          </button>
+          </button> -->
+          <ion-list>
+            <div text-left>
+              <ion-item color="primary" (click)="policyDetails('', 'immediate')">
+                <p>
+                  <span (click)="policyDetails('', 'immediate')"> IMMEDIATE ANNUITY SCHEME  <ion-icon name="arrow-forward"  end></ion-icon></span>
+                </p>
+              </ion-item>
+              <ion-item color="primary" (click)="policyDetails('', 'deferred')">
+                <p>
+                  <span (click)="policyDetails('', 'deferred')"> DEFERRED ANNUITY SCHEME  <ion-icon name="arrow-forward"  end></ion-icon></span>
+                </p>
+              </ion-item>            
+            </div>
+          </ion-list>
         </ion-card>
     </div>
-    <div *ngFor="let policyNumber of policyNo" [hidden]="!deferredPolFlag">
-        <button (click)="policyDetails(policyNumber.POLICYNO, 'deferreddetails')" ion-button icon-end block color="facebook" type="submit">
-          {{policyNumber.POLICYNO}} <ion-icon name="arrow-dropright"></ion-icon>
-
-        </button>
-    </div>
-    <div *ngFor="let policyNumber of policyNo" [hidden]="!immediatePolFlag">
-        <button (click)="policyDetails(policyNumber.POLNO, 'immediatedetails')" ion-button icon-end block color="facebook" type="submit">
-          {{policyNumber.POLNO}} <ion-icon name="arrow-dropright"></ion-icon>
-
-        </button>
-    </div>
+    <ion-list>
+      <div *ngFor="let policyNumber of policyNo" [hidden]="!deferredPolFlag">
+          <!-- <button (click)="policyDetails(policyNumber.POLICYNO, 'deferreddetails')" ion-button icon-end block color="facebook" type="submit">
+            {{policyNumber.POLICYNO}} 
+  
+          </button> -->
+          <div text-left (click)="policyDetails(policyNumber.POLICYNO, 'deferreddetails')">
+            <ion-item color="primary">
+              <p>
+                <span (click)="policyDetails(policyNumber.POLICYNO, 'deferreddetails')"> {{policyNumber.POLICYNO}}  <ion-icon name="arrow-forward"  end></ion-icon></span>
+              </p>
+            </ion-item>            
+          </div>
+      </div>
+    </ion-list>
+    <ion-list>
+      <div *ngFor="let policyNumber of policyNo" [hidden]="!immediatePolFlag">
+          <!-- <button (click)="policyDetails(policyNumber.POLNO, 'immediatedetails')" ion-button icon-end block color="facebook" type="submit">
+            {{policyNumber.POLNO}} 
+  
+          </button> -->
+          <div text-left (click)="policyDetails(policyNumber.POLNO, 'immediatedetails')">
+            <ion-item color="primary">
+              <p>
+                <span (click)="policyDetails(policyNumber.POLNO, 'immediatedetails')"> {{policyNumber.POLNO}}  <ion-icon name="arrow-forward"  end></ion-icon></span>
+              </p>
+            </ion-item>            
+          </div>
+      </div>
+    </ion-list>
     <div [hidden]="!othersFlag">
-      <ion-thumbnail item-start center>
-        <img class="logo" src="assets/imgs/logo.png"/>
-      </ion-thumbnail>
-      <p></p>
-        <ion-card>
-          <ion-card-header>  
-            PAYABLE ACCOUNTS
-          </ion-card-header>
-          
-          <button (click)="policyDetails('', 'creditOthers')" ion-button block color="facebook" type="submit">
-            CREDIT INVESTMENT
-          </button>
-          <button (click)="policyDetails('', 'lifeOthers')" ion-button block color="facebook" type="submit">
-            LIFE INSURANCE
-          </button>
-          <button (click)="policyDetails('', 'deferredOthers')" ion-button block color="facebook" type="submit">
-            DEFERRED ANNUITY
-          </button>
-        </ion-card>
-    </div>
-    <div [hidden]="!reportFlag">
         <ion-thumbnail item-start center>
           <img class="logo" src="assets/imgs/logo.png"/>
         </ion-thumbnail>
         <p></p>
           <ion-card>
-            <button (click)="policyDetails('', 'loanReport')" ion-button block color="facebook" type="submit">
-              LOAN STATEMENT
+            <ion-card-header>  
+              PAYABLE ACCOUNTS
+            </ion-card-header>
+            
+            <!-- <button (click)="policyDetails('', 'creditOthers')" ion-button block color="facebook" type="submit">
+              CREDIT INVESTMENT
             </button>
-            <button (click)="policyDetails('', 'ppfReport')" ion-button block color="facebook" type="submit">
-              PRIVATE PROVIDENT FUND
+            <button (click)="policyDetails('', 'lifeOthers')" ion-button block color="facebook" type="submit">
+              LIFE INSURANCE
             </button>
-            <button (click)="policyDetails('', 'gisReport')" ion-button block color="facebook" type="submit">
-              GROUP INSURANCE SCHEME
-            </button>
+            <button (click)="policyDetails('', 'deferredOthers')" ion-button block color="facebook" type="submit">
+              DEFERRED ANNUITY
+            </button> -->
+  
+          <ion-list>
+            <div text-left>
+              <ion-item color="primary">
+                <p>
+                  <span (click)="policyDetails('', 'creditOthers')"> CREDIT & INVESTMENT  <ion-icon name="arrow-forward"  end></ion-icon></span>
+                </p>
+              </ion-item>
+              <ion-item color="primary">
+                <p>
+                  <span (click)="policyDetails('', 'lifeOthers')"> LIFE INSURANCE  <ion-icon name="arrow-forward"  end></ion-icon></span>
+                </p>
+              </ion-item>
+              <ion-item color="primary">
+                <p>
+                  <span (click)="policyDetails('', 'deferredOthers')"> DEFERRED ANNUITY  <ion-icon name="arrow-forward"  end></ion-icon></span>
+                </p>
+              </ion-item>
+            </div>
+          </ion-list>
           </ion-card>
-      </div>
+    </div>
+    <div [hidden]="!reportFlag">
+      <ion-thumbnail item-start center>
+        <img class="logo" src="assets/imgs/logo.png"/>
+      </ion-thumbnail>
+      <p></p>
+        <ion-card>
+          <!-- <button (click)="policyDetails('', 'loanReport')" ion-button block color="facebook" type="submit">
+            LOAN STATEMENT
+          </button>
+          <button (click)="policyDetails('', 'ppfReport')" ion-button block color="facebook" type="submit">
+            PRIVATE PROVIDENT FUND
+          </button>
+          <button (click)="policyDetails('', 'gisReport')" ion-button block color="facebook" type="submit">
+            GROUP INSURANCE SCHEME
+          </button>
+        </ion-card> -->
+        <ion-list>
+          <div text-left>
+            <ion-item color="primary" (click)="policyDetails('', 'loanReport')">
+              <p>
+                <span (click)="policyDetails('', 'loanReport')"> LOAN STATEMENT  <ion-icon name="arrow-forward"  end></ion-icon></span>
+              </p>
+            </ion-item>
+            <p></p>
+            <ion-item color="primary" (click)="policyDetails('', 'ppfReport')">
+              <p>
+                <span (click)="policyDetails('', 'ppfReport')"> PRIVATE PROVIDENT FUND  <ion-icon name="arrow-forward"  end></ion-icon></span>
+              </p>
+            </ion-item>
+            <p></p>
+            <ion-item color="primary" (click)="policyDetails('', 'gisReport')">
+              <p>
+                <span (click)="policyDetails('', 'gisReport')"> GROUP INSURANCE SCHEME  <ion-icon name="arrow-forward"  end></ion-icon></span>
+              </p>
+            </ion-item>
+          </div>
+        </ion-list>
+        </ion-card>
+    </div>
+    <ion-list>
       <div *ngFor="let policyNumber of policyNo" [hidden]="!loanReportFlag">
-        <button (click)="policyDetails(policyNumber.ACCOUNT_NO, 'loanReportPdf')" ion-button block color="facebook" type="submit">
+        <!-- <button (click)="policyDetails(policyNumber.CREDIT_ID, 'loanReportPdf')" ion-button block color="facebook" type="submit">
           {{policyNumber.ACCOUNT_NO}} 
-        </button>
+        </button> -->
+        <div text-left (click)="policyDetails(policyNumber.CREDIT_ID, 'loanReportPdf')">
+          <ion-item color="primary">
+            <p>
+              <span (click)="policyDetails(policyNumber.CREDIT_ID, 'loanReportPdf')"> {{policyNumber.ACCOUNT_NO}}  <ion-icon name="arrow-forward"  end></ion-icon></span>
+            </p>
+          </ion-item>
+        </div>
+        <p [hidden]="!loanDateFlag">
+            <ion-card>
+                <!-- <button ion-button icon-right (click)="picker.open()">
+                    <ion-datetime #picker pickerFormat="DD MMMM YYYY" [min]="datePickerMin" [(ngModel)]="fromDate" formControlName="fromDate" (ionChange)="changeDate()"></ion-datetime>
+                    <ion-icon name="calendar"></ion-icon>
+                  </button> -->
+            <ion-item type="date"  (click)="picker.open()">
+              <ion-label (click)="picker1.open()"> From Date <ion-icon ios="ios-calendar" md="md-calendar" end></ion-icon></ion-label>
+              <ion-datetime #picker1 [(ngModel)]="fromDate" formControlName="fromDate" data-date-format="DD MMMM YYYY"></ion-datetime>
+              
+            </ion-item>
+            <ion-item>
+              <ion-label (click)="picker2.open()"> To Date <ion-icon ios="ios-calendar" md="md-calendar" end></ion-icon></ion-label>
+              <ion-datetime #picker2 [(ngModel)]="toDate" formControlName="toDate" data-date-format="DD MMMM YYYY"></ion-datetime>
+            </ion-item>
+            <button (click)="policyDetails(policyNumber.CREDIT_ID, 'loanReportSubmit')" ion-button block color="facebook" type="submit">
+              Submit
+            </button>
+            <p></p><p></p>
+          </ion-card>
+        </p>
       </div>
+      </ion-list>
+      <ion-list>
       <div *ngFor="let policyNumber of policyNo" [hidden]="!gisReportFlag">
-        <button (click)="policyDetails(policyNumber.POLNO, 'gisReportPdf')" ion-button block color="facebook" type="submit">
+        <!-- <button (click)="policyDetails(policyNumber.POLNO, 'gisReportPdf')" ion-button block color="facebook" type="submit">
           {{policyNumber.POLNO}} 
-        </button>
+        </button> -->
+        <div text-left (click)="policyDetails(policyNumber.POLNO, 'gisReportPdf')">
+          <ion-item color="primary">
+            <p>
+              <span (click)="policyDetails(policyNumber.POLNO, 'gisReportPdf')"> {{policyNumber.POLNO}}  <ion-icon name="arrow-forward"  end></ion-icon></span>
+            </p>
+          </ion-item>
+        </div>
       </div>
+    </ion-list>
       <div *ngFor="let policyNumber of policyNo" [hidden]="!ppfReportFlag">
           <ion-item>
               <ion-row> 
-                  <ion-col col-5><strong>Citizen ID </strong></ion-col>
-                  <ion-col col-1>:</ion-col>
-                  <ion-col col-6>{{policyNumber.CITIZENID}}</ion-col>
+                  <ion-col><strong>Citizen ID </strong></ion-col>
               </ion-row>
               <ion-row> 
-                  <ion-col col-5><strong>PF Number </strong></ion-col>
-                  <ion-col col-1>:</ion-col> 
-                  <ion-col col-6>{{policyNumber.PFNUMBER}}</ion-col>
+                <ion-col>{{policyNumber.CITIZENID}}</ion-col>
               </ion-row>
               <ion-row> 
-                  <ion-col col-5><strong>Employer Contribution </strong></ion-col>
-                  <ion-col col-1>:</ion-col> 
-                  <ion-col col-6>{{policyNumber.ERCONTRIBUTION}}</ion-col>
+                  <ion-col><strong>PF Number </strong></ion-col>
               </ion-row>
               <ion-row> 
-                  <ion-col col-5><strong>Employee Contribution</strong></ion-col>
-                  <ion-col col-1>:</ion-col> 
-                  <ion-col col-6>{{policyNumber.EECONTRIBUTION}}</ion-col>
+                <ion-col>{{policyNumber.PFNUMBER}}</ion-col>
               </ion-row>
+              <ion-row> 
+                  <ion-col><strong>Employer Contribution </strong></ion-col>
+              </ion-row>
+              <ion-row> 
+                <ion-col>Nu. {{policyNumber.ERCONTRIBUTION}}</ion-col>
+              </ion-row>
+              <ion-row> 
+                  <ion-col><strong>Employee Contribution</strong></ion-col>
+              </ion-row>
+              <ion-row> 
+                <ion-col>Nu. {{policyNumber.EECONTRIBUTION}}</ion-col>
+            </ion-row>
           </ion-item>
         <button (click)="policyDetails(policyNumber.CITIZENID, 'ppfReportPdf')" ion-button block color="facebook" type="submit">
           VIEW 
         </button>
       </div>
+  
+    
     </form>
 </ion-content>

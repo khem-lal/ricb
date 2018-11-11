@@ -7,12 +7,14 @@
 <ion-header>
 
   <ion-navbar>
-    <button ion-button menuToggle class="title"> 
-      <ion-icon name="menu"></ion-icon>
-    </button>
+    <ion-buttons left>
+      <button ion-button icon-only (click)="goToHome()">
+          <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title>Feedback</ion-title>
     <ion-buttons right> 
-      <button ion-button icon-only>
+      <button ion-button icon-only (click)="callPage()">
         <ion-icon  name="call"></ion-icon>
       </button>
     </ion-buttons>

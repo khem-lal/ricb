@@ -1,11 +1,20 @@
 page-lifedetails {
     .politem{
-        font-size: 12px !important;
+        font-size: 14px !important;
         margin-left: 0px;
+        width: 100%;
     }
     .polstatus{
         text-align: center !important;
         color: green;
         font-size: 10px;
+    }
+    .lapsedMsg{
+        color: red;
+    }
+    .selectInstallment{
+        max-width: 100%;
+        font-size: 15px;
+        font-weight: bold;
     }
 }

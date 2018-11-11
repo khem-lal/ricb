@@ -18,15 +18,23 @@ page-home {
     }
     .alignRight{
 		font-size: 11px;
-		float: right;
+        float: right;
+        color: #a95a08;
     }
     .alignLeft{
-		font-size: 11px;
+        font-size: 11px;
+        color: #a95a08;
     }
     .errorMsg{
        > div{
         background: #ffffff !important;
         color: red !important;
        }
+    }
+    .bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default{
+        color: #ffffff;
+    }
+    .cidInput{
+        background: #d4d4d6;
     }
 }

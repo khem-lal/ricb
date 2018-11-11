@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { PaymentPage } from '../payment/payment';
 
 /**
  * Generated class for the LifedetailsPage page.
@@ -15,7 +16,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
   selector: 'page-lifedetails',
   templateUrl: 'lifedetails.html',
 })
-export class LifedetailsPage {
+export class LifedetailsPage implements OnInit {
 
   private baseUrl: String;
   polNo: any;
@@ -26,6 +27,11 @@ export class LifedetailsPage {
   paymentMode: String;
   monthlyFlag: boolean = false;
   quarterlyFlag: boolean = false;
+  halfyearlyFlag: boolean = false;
+  payButton: boolean = false;
+  dateExceedMessage: boolean = false;
+  lapsedMessage: boolean = false;
+  paymentOption: boolean = false;
 
   cidNo: String;
   custName: String;
@@ -33,14 +39,15 @@ export class LifedetailsPage {
   policyNo: String;
   status: any;
   datetime: any;
-
-  
+  nextRepayDate: any; 
+  remitterCid: String; 
+  payupButton: boolean = false;
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams, 
     public http: Http, public loadingCtrl: LoadingController, public inAppBrowser: InAppBrowser) {
-    //this.datetime = new Date(this.current_date.replace(/-/g, "/"));
-    //console.log(this.datetime);
+    this.datetime = new Date();
     this.polNo = navParams.get('param');
+    this.remitterCid = navParams.get('remitterCid');
      
     this.presentLoadingDefault();
     this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
@@ -50,19 +57,50 @@ export class LifedetailsPage {
         this.policyDtls = data;
         this.premiumAmount = data[0].PREMIUM;
         this.paymentMode = data[0].P_MODE;
+        this.nextRepayDate = data[0].NEXT_REPAY;
 
         this.cidNo = data[0].CUST_CID;
         this.custName = data[0].POLICY_HOLDER;
-        this.deptCode = "Life";
+        this.deptCode = "2";
         this.policyNo = data[0].POLICY_NO;
+
+        //let curDate = this.datepipe.transform(this.datetime, 'dd-MMM-yy');
 
         if(this.paymentMode == 'MONTHLY'){
           this.monthlyFlag = true;
           this.quarterlyFlag = false;
+          this.paymentOption = true;
         }
         if(this.paymentMode == 'QUARTERLY'){
           this.monthlyFlag = false;
           this.quarterlyFlag = true;
+          this.paymentOption = true;
+        }
+        if(this.paymentMode == 'HALF YEARLY'){
+          this.halfyearlyFlag = true;
+          this.paymentOption = true;
+        }
+        
+        /* if(Date.parse(this.nextRepayDate) > Date.parse(curDate)){
+          this.payButton = false;
+          this.dateExceedMessage = true;
+        }
+        else{
+          this.payButton = true;
+          this.dateExceedMessage = false;
+        } */
+        if(data[0].POLSTATUS == 'ACTIVE'){
+          this.payButton = true;
+          this.dateExceedMessage = false;
+        }
+        else if(data[0].POLSTATUS == 'LAPSED'){
+          this.payButton = false;
+          this.lapsedMessage = true;
+        }
+        else{
+          this.payButton = false;
+          this.lapsedMessage = false;
+          this.payupButton = true;
         }
       },
       err => {
@@ -85,44 +123,59 @@ export class LifedetailsPage {
 
   calculateInstallment(value){
     
-    if(value != 's'){
-      if(value == 0){
-        value = 1;
-      }
-      this.amountToPay = this.premiumAmount * value;
-    }    
+    // if(value != 's'){
+       if(value == 0){
+         value = 1;
+       }
+       console.log(value);
+    // }
+    this.amountToPay = this.premiumAmount * value;    
   }
 
   confirmpayment(){
-    var orderNo = Math.floor(1000000000 + Math.random() * 9000000000);
-    this.insertPayment(orderNo);
-    let alert = this.alertCtrl.create({
-      title: 'Confirm Your Payment',    
-      subTitle: 'Total Amount Payable is Nu. '+this.amountToPay+'<p> for Policy No: '+this.polNo+'</p>',
-      buttons: [
-        {
-          text: 'OK',
-          handler: () => {
-            this.amountToPay="1";
-            
-            this.paymentUrl = "https://apps.ricb.com.bt:8443/paymentgateway/ARapps.jsp?amtToPay="+this.amountToPay+
-            "&id=C&policy_no="+this.polNo+"&order_No="+orderNo;
-            let target = "_self";
-            this.inAppBrowser.create(this.paymentUrl, target);
-            
+    if(this.amountToPay == 0){
+      let alert = this.alertCtrl.create({
+        title: 'Message',    
+        subTitle: 'Amount cannot be 0. Please select installment',
+        buttons: [
+          {
+            text: 'OK'
           }
-        }
-      ]
-    }); 
-    alert.present();
-    
+        ]
+      }); 
+      alert.present();
+
+    }
+    else{
+      var orderNo = Math.floor(1000000000 + Math.random() * 9000000000);
+      this.insertPayment(orderNo);
+      let alert = this.alertCtrl.create({
+        title: 'Confirm Your Payment',    
+        subTitle: 'Total Amount Payable is Nu. '+this.amountToPay+' for Policy No: '+this.polNo,
+        buttons: [
+          {
+            text: 'OK',
+            handler: () => {
+             
+              this.paymentUrl = "https://apps.ricb.com.bt:8443/paymentgateway/ARapps.jsp?amtToPay="+this.amountToPay+
+              "&id=C&policy_no="+this.polNo+"&order_No="+orderNo;
+              //let target = "_self";
+              //this.inAppBrowser.create(this.paymentUrl, target, 'location=false');
+              
+              this.navCtrl.push(PaymentPage, {param: this.paymentUrl, type: "payment"});
+            }
+          }
+        ]
+      }); 
+      alert.present();
+    }
   }
 
   insertPayment(orderNo){
     console.log('insertpayment');
     this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
 
-    this.http.get(this.baseUrl+'/insertLifePayment?cidNo='+this.cidNo+'&custName='+this.custName+'&deptCode='+this.deptCode+'&policyNo='+this.policyNo+'&amount='+this.premiumAmount+'&orderNo='+orderNo).map(res => res.json()).subscribe(
+    this.http.get(this.baseUrl+'/insertLifePayment?cidNo='+this.cidNo+'&custName='+this.custName+'&deptCode='+this.deptCode+'&policyNo='+this.policyNo+'&amount='+this.premiumAmount+'&orderNo='+orderNo+'&remitterCid='+this.remitterCid).map(res => res.json()).subscribe(
       data => {
         this.status = data;
         if(this.status == "1"){
@@ -134,5 +187,26 @@ export class LifedetailsPage {
       }
     );
   }
+
+  ngOnInit(){
+    /*setTimeout(() => {
+        // this.navCtrl.popToRoot();
+        // might try this instead
+        
+        let alert = this.alertCtrl.create({
+          title: 'Session Timeout',    
+          subTitle: 'Your session is inactive. Please login again.',
+          buttons: [
+            {
+              text: 'OK',
+              handler: () => {
+                this.navCtrl.setRoot(HomePage);
+              }
+            }
+          ]
+        }); 
+        alert.present();
+    }, 50000);*/
+}
 
 }

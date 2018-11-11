@@ -30,6 +30,7 @@ export class SqliteProvider {
 registerUser(username, password, phoneNo, email, cidNo){
   this.insertIntoTable("INSERT INTO t_user_master (id, user_name, password, phone_number, email, cid_no) "+
   "VALUES('1', '" + username + "', '" + password + "', '" + phoneNo + "', '" + email + "', '" + cidNo + "')");
+  console.log('User Inserted');
 }
 
 insertIntoTable(query: any) {
@@ -47,15 +48,17 @@ insertIntoTable(query: any) {
 getRegisteredCID(){
   return new Promise(res => {
     let query = "SELECT cid_no FROM t_user_master";
-    this.db.executeSql(query, rs => {
+    this.db.executeSql(query, [], rs => {
         if (rs.rows.length > 0) {
-          res(true);
+          res(rs.rows.item(0).cid_no);
+          //console.log("has data"+rs.rows.item(0).cid_no);
         }else{
           res(false);
+          //console.log("no data");
         }
       }, (e) => {
         res(false);
-        console.log('Sql Query Error', e);
+        console.log('Sql Query Error While selecting cidno', e);
       });
   })
 }

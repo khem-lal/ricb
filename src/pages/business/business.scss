@@ -1,11 +1,23 @@
 page-business {
     .businessData{
         font-size: 1em;
-        text-align: justify;
+        text-align: left !important;
     }
 
     .lob{
         text-align: justify;
+    }
+
+    .businessTxt{
+        .button-inner { /*< --- this class added automatically */
+            justify-content: flex-start;
+         }
+        font-size: 12px;
+    }
+
+    .icon{
+        position: relative;
+        float: right;
     }
 
 }

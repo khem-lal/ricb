@@ -1,9 +1,9 @@
 <ion-header>
-  <ion-navbar hideBackButton="true">
+  <ion-navbar hideBackButton>
     <button ion-button menuToggle class="title"> 
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title style="color: #ffffff !important">myRICB</ion-title>
+    <ion-title style="color: #ffffff !important">MyRICB</ion-title>
     <ion-buttons right> 
       <button ion-button icon-only (click)="callPage()">
         <ion-icon  name="call"></ion-icon>
@@ -22,18 +22,13 @@
       
       <ion-item>
         <ion-label color="primary" floating text-center>CID / Passport Number</ion-label>
-        <ion-input ngControl="cidNo" type="number"[(ngModel)]="cidNo" formControlName="cidNo" round text-center></ion-input>
+        <ion-input readonly="false" class="cidInput" ngControl="cidNo" type="number" [(ngModel)]="cidNo" formControlName="cidNo" round text-center></ion-input>
       </ion-item>
-      
      
       <ion-item>
         <ion-label color="primary" floating text-center>Password</ion-label>
         <ion-input type="password" [(ngModel)]="password" formControlName="password" round text-center></ion-input>
       </ion-item>
-      <!-- <ion-item>
-        <ion-label>Remember Me</ion-label>
-        <ion-checkbox round></ion-checkbox>
-      </ion-item> -->
       <p></p>
       <button ion-button block color="facebook" type="submit">
         <ion-icon name="unlock"></ion-icon>&nbsp;&nbsp;Login
@@ -42,7 +37,7 @@
     </form>
 
     <button (click)="forgotPassword()" color="dark" ion-button clear class="alignRight">Forgot Password?</button>
-    <button (click)="goToRegistrationPage()" color="dark" ion-button clear class="alignLeft"><strong>New User? Sign Up</strong></button>
+    <button (click)="goToRegistrationPage()" color="dark" ion-button clear class="alignLeft">New User? Sign Up</button>
 
     <ion-slides *ngIf="adImage && adImage.length" class="ion-slide" autoplay="5000" loop="true" speed="500" pager="true">
 

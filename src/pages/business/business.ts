@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { HomePage } from '../home/home';
+import { CallNumber } from '@ionic-native/call-number';
 
 /**
  * Generated class for the BusinessPage page.
@@ -25,7 +26,7 @@ export class BusinessPage {
   businessDtls: String[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, 
-    public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
+    public loadingCtrl: LoadingController, public alertCtrl: AlertController, private callNumber: CallNumber) {
     this.presentLoadingDefault();
     this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
 
@@ -116,5 +117,15 @@ export class BusinessPage {
         console.log("Error fetching data");
       }
     );
+  }
+
+  goToHome(){
+    this.navCtrl.setRoot(HomePage);
+  }
+
+  callPage(){
+    this.callNumber.callNumber("1818", true)
+    .then(res => console.log('Launched dialer!', res))
+    .catch(err => console.log('Error launching dialer', err));
   }
 }

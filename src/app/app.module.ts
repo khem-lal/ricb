@@ -31,6 +31,16 @@ import { CallNumber } from '@ionic-native/call-number';
 import { ForgotpasswordPage } from '../pages/forgotpassword/forgotpassword';
 import { SqliteProvider } from '../providers/sqlite/sqlite';
 import { UserprofilePage } from '../pages/userprofile/userprofile';
+import { Network } from '@ionic-native/network';
+import { PaymentPage } from '../pages/payment/payment';
+import { DatePipe } from '@angular/common';
+import { FileTransfer } from '@ionic-native/file-transfer';
+import { DocumentViewer } from '@ionic-native/document-viewer';
+import { File } from '@ionic-native/file';
+import { PdfViewerComponent } from 'ng2-pdf-viewer';
+import { IonicStorageModule } from '@ionic/storage';
+import { FilePath } from '@ionic-native/file-path';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
 
 @NgModule({
   declarations: [
@@ -54,11 +64,14 @@ import { UserprofilePage } from '../pages/userprofile/userprofile';
     ImmediatedetailsPage,
     OthersPage,
     ForgotpasswordPage,
-    UserprofilePage
+    UserprofilePage,
+    PaymentPage,
+    PdfViewerComponent
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     HttpModule
   ],
   bootstrap: [IonicApp],
@@ -83,7 +96,8 @@ import { UserprofilePage } from '../pages/userprofile/userprofile';
     ImmediatedetailsPage,
     OthersPage,
     ForgotpasswordPage,
-    UserprofilePage
+    UserprofilePage,
+    PaymentPage
   ],
   providers: [
     StatusBar,
@@ -92,7 +106,14 @@ import { UserprofilePage } from '../pages/userprofile/userprofile';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     EmailComposer,
     CallNumber,
-    SqliteProvider
+    SqliteProvider,
+    Network,
+    DatePipe,
+    File,
+    DocumentViewer,
+    FileTransfer,
+    FilePath,
+    AndroidPermissions
     
   ]
 })

@@ -6,12 +6,14 @@
 -->
 <ion-header>
     <ion-navbar>
-      <button ion-button menuToggle class="title"> 
-        <ion-icon name="menu"></ion-icon>
-      </button>
+      <ion-buttons left>
+        <button ion-button icon-only (click)="goToHome()">
+            <ion-icon name="arrow-back"></ion-icon>
+        </button>
+      </ion-buttons>
       <ion-title>Business</ion-title>
       <ion-buttons right> 
-        <button ion-button icon-only>
+        <button ion-button icon-only (click)="callPage()">
           <ion-icon  name="call"></ion-icon>
         </button>
       </ion-buttons>
@@ -22,15 +24,27 @@
 
 <ion-content padding>
     <form method="post">
-        <div *ngFor="let businessDataDTO of businessData" class="businessData" [hidden]="!businessFlag">
-          <button (click)="businessDetails(businessDataDTO.id)" ion-button icon-end block color="facebook" type="submit">
-            {{businessDataDTO.business_name}} <ion-icon name="arrow-dropright"></ion-icon>
-          </button>
+        <ion-list>
+        <div *ngFor="let businessDataDTO of businessData" class="" [hidden]="!businessFlag" text-left>
+          <!-- <button (click)="businessDetails(businessDataDTO.business_id)" ion-button icon-left block color="facebook" type="submit" class="businessTxt" item-left>
+            {{businessDataDTO.business_name}} <ion-icon name="arrow-forward" end></ion-icon>
+            
+          </button> -->
+          
+            <ion-item color="primary">
+              <p>
+                <span (click)="businessDetails(businessDataDTO.business_id)"> {{businessDataDTO.business_name}}  <ion-icon name="arrow-forward"  end></ion-icon></span>
+                
+              </p>
+            </ion-item>
+          
         </div>
+      </ion-list>
     </form>
     <div *ngFor="let businessDataDTO of businessData" class="lob" [hidden]="!detailsFlag">
-      <ion-card>
-        <ion-item text-wrap>{{businessDataDTO.contents}}</ion-item>
-      </ion-card>
+      
+        {{businessDataDTO.contents}}
+
+        
     </div>
 </ion-content>

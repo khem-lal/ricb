@@ -30,13 +30,18 @@
         <ion-input type="password" [(ngModel)]="password" formControlName="password" round></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label color="primary" floating>Phone Number</ion-label>
+        <ion-label color="primary" floating>Valid Mobile Number</ion-label>
         <ion-input type="number" [(ngModel)]="phoneNo" formControlName="phoneNo" round maxlength="8"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label color="primary" floating>Email</ion-label>
         <ion-input type="email" [(ngModel)]="email" formControlName="email" round></ion-input>
       </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngIf="!registrationForm.controls.email.valid && registrationForm.controls.email.dirty && !registrationForm.controls.email.pending" >
+        Enter valid email
+        </ng-container>
+      </div>
       <ion-item>
         <ion-label color="primary" floating>Citizen / Passport Number</ion-label>
         <ion-input type="number" [(ngModel)]="cidNumber" formControlName="cidNumber" round></ion-input>

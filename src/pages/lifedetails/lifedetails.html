@@ -1,16 +1,32 @@
 
 <ion-header>
-
-        <ion-navbar>
-          <ion-title>Life Insurance</ion-title>
-        </ion-navbar>
-      
-      </ion-header>
+    <ion-navbar hideBackButton>
+    <button ion-button menuToggle class=""> 
+        <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Life Insurance</ion-title>
+    <ion-buttons right>
+    <button class="back-button disable-hover bar-button bar-button-ios back-button-ios bar-button-default bar-button-default-ios show-back-button" 
+        ion-button="bar-button" ng-reflect-klass="back-button" navPop>
+        <span class="button-inner">
+        <ion-icon class="back-button-icon icon" role="img" 
+        aria-label="arrow back" ng-reflect-klass="back-button-icon"  
+        ng-reflect-name="arrow-back">
+        </ion-icon>
+        <span class="back-button-text" style="transform: translateX(0px);" ng-reflect-klass="back-button-text" ng-reflect-ng-class="back-button-text-ios">Back</span></span><div class="button-effect"></div></button>
+    </ion-buttons>
+    </ion-navbar>
+</ion-header>
       
       
       <ion-content padding>
-          <ion-item *ngFor="let lifeDto of policyDtls" class="politem">
+          <ion-item *ngFor="let lifeDto of policyDtls" class="politem" text-wrap>
             <label class="polstatus" text-center>{{lifeDto.POLSTATUS}}</label>
+            <ion-row> 
+                <ion-col col-5><strong>Policy Holder </strong></ion-col>
+                <ion-col col-1>:</ion-col>
+                <ion-col col-6>{{lifeDto.POLICY_HOLDER}}</ion-col>
+            </ion-row>
             <ion-row> 
                 <ion-col col-5><strong>Policy Number </strong></ion-col>
                 <ion-col col-1>:</ion-col>
@@ -52,49 +68,72 @@
                 <ion-col col-6>{{lifeDto.NEXT_REPAY}}</ion-col>
             </ion-row>
             <ion-row> 
-                <ion-col col-5><strong>Term </strong></ion-col>
+                <ion-col col-5><strong>Term (Years) </strong></ion-col>
                 <ion-col col-1>:</ion-col> 
                 <ion-col col-6>{{lifeDto.TERM}}</ion-col>
             </ion-row>
-        </ion-item>
+          </ion-item>
+        <div [hidden]="!paymentOption">
             <ion-row [hidden]="!monthlyFlag">
-                <ion-label  class="politem" text-left>You want to pay for</ion-label>
-                  <ion-select [(ngModel)]="installment" #C (ionChange)="calculateInstallment(C.value)">
-                      <ion-option value="s" selected>Select Installment</ion-option>
-                      <ion-option value="1">1 month</ion-option>
-                      <ion-option value="2">2 months</ion-option>
-                      <ion-option value="3">3 months</ion-option>
-                      <ion-option value="4">4 months</ion-option>
-                      <ion-option value="5">5 months</ion-option>
-                      <ion-option value="6">6 months</ion-option>
-                      <ion-option value="7">7 months</ion-option>
-                      <ion-option value="8">8 months</ion-option>
-                      <ion-option value="9">9 months</ion-option>
-                      <ion-option value="10">10 months</ion-option>
-                      <ion-option value="11">11 months</ion-option>
-                      <ion-option value="12">12 months</ion-option>
-                  </ion-select>
+                <ion-col col-5><strong><ion-label  class="politem" text-left>You want to pay for</ion-label> </strong></ion-col>
+                <ion-col col-1>:</ion-col>
+                <ion-col col-6>
+                    <ion-select class="selectInstallment" [(ngModel)]="installment" #C (ionChange)="calculateInstallment(C.value)">
+                        <ion-option value="0" selected>Select Installment</ion-option>
+                        <ion-option value="1">1 month</ion-option>
+                        <ion-option value="2">2 months</ion-option>
+                        <ion-option value="3">3 months</ion-option>
+                        <ion-option value="4">4 months</ion-option>
+                        <ion-option value="5">5 months</ion-option>
+                        <ion-option value="6">6 months</ion-option>
+                        <ion-option value="7">7 months</ion-option>
+                        <ion-option value="8">8 months</ion-option>
+                        <ion-option value="9">9 months</ion-option>
+                        <ion-option value="10">10 months</ion-option>
+                        <ion-option value="11">11 months</ion-option>
+                        <ion-option value="12">12 months</ion-option>
+                    </ion-select>
+                </ion-col>
             </ion-row>
       
             <ion-row [hidden]="!quarterlyFlag">
-                <ion-label  class="politem">You want to pay for</ion-label>
-                  <ion-select [(ngModel)]="installment" #C (ionChange)="calculateInstallment(C.value)">
-                      <ion-option value="s">Select Installment</ion-option>
+                <ion-col col-5><ion-label  class="politem">You want to pay for</ion-label></ion-col>
+                  <ion-select class="selectInstallment" [(ngModel)]="installment" #C (ionChange)="calculateInstallment(C.value)">
+                      <ion-option value="0" selected>Select Installment</ion-option>
                       <ion-option value="1">1 Quarter</ion-option>
                       <ion-option value="2">2 Quarter</ion-option>
                       <ion-option value="3">3 Quarter</ion-option>
                       <ion-option value="4">4 Quarter</ion-option>
                   </ion-select>
+            </ion-row>   
+            <ion-row [hidden]="!halfyearlyFlag">
+                <ion-label  class="politem">You want to pay for</ion-label>
+                  <ion-select class="selectInstallment" [(ngModel)]="installment" #C (ionChange)="calculateInstallment(C.value)">
+                      <ion-option value="0" selected>Select Installment</ion-option>
+                      <ion-option value="6">1st Half</ion-option>
+                      <ion-option value="12">2nd Half</ion-option>
+                  </ion-select>
             </ion-row>
             <ion-row> 
                 <ion-col col-5><strong>Amount To Pay </strong></ion-col>
                 <ion-col col-1>:</ion-col> 
-                <ion-col col-6>Nu. {{amountToPay}}</ion-col>
+                <ion-col col-6>Nu. {{amountToPay | number:0}}</ion-col>
             </ion-row>
             <p></p>
-            <button ion-button block color="facebook" type="submit" (click)="confirmpayment()">
+            <button ion-button block color="facebook" type="submit" (click)="confirmpayment()" [hidden]="!payButton">
                 PROCEED TO PAY
             </button> 
+            <button ion-button block color="light" type="submit"  [hidden]="!payupButton" readonly="true">
+                PROCEED TO PAY
+            </button> 
+        </div>
+            <label [hidden]="!dateExceedMessage">
+                You have exceeded the repayment date. Please visit RICB office.
+            </label>
+
+            <label [hidden]="!lapsedMessage" class="lapsedMsg">
+                <strong> Your policy is lapsed, Visit RICB office to revive your policy.</strong>
+            </label>
              
       </ion-content>
       

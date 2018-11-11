@@ -14,3 +14,41 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+.logo {
+    width: 20%;
+    margin: 10px auto;
+
+}
+.background {
+    background-color: #043881 !important;
+}
+.title {
+    background-color: #043881;
+    color: #ffffff !important;
+}
+.toolbar-title-ios {   
+    color: #ffffff !important;
+    font-size: 14px;
+    margin-left: 5px;
+}
+.toolbar-title-md{
+    color: #ffffff !important;
+    padding: 0;
+    font-size: 14px;
+}
+.toolbar-ios ion-title{
+    padding: 0 !important;
+}
+.ricblabel{
+    color: #bebdbd;
+    margin-left: 5px;
+}
+.toolbar-background-md{
+    background: #043881;
+}
+ion-app.md{
+    font-size: 10px;
+}
+.bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default{
+    color: #ffffff;
+}

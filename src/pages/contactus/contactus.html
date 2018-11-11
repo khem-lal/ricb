@@ -6,12 +6,14 @@
 -->
 <ion-header>
     <ion-navbar>
-      <button ion-button menuToggle class="title"> 
-        <ion-icon name="menu"></ion-icon>
-      </button>
+      <ion-buttons left>
+        <button ion-button icon-only (click)="goToHome()">
+            <ion-icon name="arrow-back"></ion-icon>
+        </button>
+      </ion-buttons>
       <ion-title>Contact Us</ion-title>
       <ion-buttons right> 
-        <button ion-button icon-only>
+        <button ion-button icon-only (click)="callPage()">
           <ion-icon  name="call"></ion-icon>
         </button>
       </ion-buttons>
@@ -21,20 +23,21 @@
 
 <ion-content padding>
   <ion-title center>OUR ADDRESS</ion-title>
-  <strong><em>HEAD OFFICE, THIMPHU</em></strong>
   <p class="contactus">
+  <strong><em>HEAD OFFICE, THIMPHU</em></strong>
+  
     Thimphu, Post Box No. 315<br />
     PABX : 00975-2-322426, 323487, 324282, 323993,325858, 328307, 321037, 321161.<br />
     FAX No.: 00975-2-323677, 336086, 336085. <br />    
     Email: contactus@ricb.bt / feedback@ricb.bt<br />
-    Website:  www.ricb.com.bt; <br />
-    <label class="tollfree"> Toll Free No. 1811 (Thimphu) </label><br />
+    Website:  www.ricb.bt; <br />
+    <label class="tollfree"> Toll Free No. 1818 </label><br />
   </p>
   <p class="contactus">
     <strong><em>REGIONAL  OFFICE,  PHUENTSHOLING</em></strong> <br /> 
     Phuentsholing,  Post Box No. 77<br />
     PABX : 00975-5-252482, 252453, 252509, 252869<br />
     FAX No.: 00975-5252441<br />
-    <label class="tollfree">Toll Free No. 151 (Phuentsholing) </label><br />
+    <!-- <label class="tollfree">Toll Free No. 1515 </label><br /> -->
   </p>
 </ion-content>

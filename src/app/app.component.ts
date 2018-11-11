@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -10,6 +10,7 @@ import { BusinessPage } from '../pages/business/business';
 import { ContactusPage } from '../pages/contactus/contactus';
 import { FeedbackPage } from '../pages/feedback/feedback';
 import { SqliteProvider } from '../providers/sqlite/sqlite';
+import { DashboardPage } from '../pages/dashboard/dashboard';
 
 @Component({
   templateUrl: 'app.html'
@@ -21,20 +22,28 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public sqlite: SqliteProvider) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public sqlite: SqliteProvider, public events: Events) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'About us', component: AboutusPage},
-      { title: 'Calculator', component: CalculatorPage},
-      { title: 'Business', component: BusinessPage},
-      { title: 'Contact us', component: ContactusPage},
-      { title: 'Feedback', component: FeedbackPage}
-      
-    ];
-
+    events.subscribe('userloggedin', () => {
+      this.pages = [
+        { title: 'Dashboard', component: DashboardPage },
+        { title: 'Logout', component: HomePage}
+        
+      ];
+    });
+    events.subscribe('userloggedout', () => {
+      this.pages = [
+        // { title: 'Home', component: HomePage },
+        { title: 'About us', component: AboutusPage},
+        { title: 'Calculator', component: CalculatorPage},
+        { title: 'Business', component: BusinessPage},
+        { title: 'Contact us', component: ContactusPage},
+        { title: 'Feedback', component: FeedbackPage}
+        
+      ];
+    });
   }
 
   initializeApp() {

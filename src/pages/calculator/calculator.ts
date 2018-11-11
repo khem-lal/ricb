@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { HomePage } from '../home/home';
+import { CallNumber } from '@ionic-native/call-number';
 
 /**
  * Generated class for the CalculatorPage page.
@@ -18,7 +20,7 @@ export class CalculatorPage {
   installmentCalculator: boolean = false;
   interestCalculator: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, private callNumber: CallNumber) {
   }
 
   openCalculator(caltype){
@@ -37,6 +39,16 @@ export class CalculatorPage {
       this.creditCalculator = false;
       this.installmentCalculator = false;
     }
+  }
+
+  goToHome(){
+    this.navCtrl.setRoot(HomePage);
+  }
+
+  callPage(){
+    this.callNumber.callNumber("1818", true)
+    .then(res => console.log('Launched dialer!', res))
+    .catch(err => console.log('Error launching dialer', err));
   }
 
 }

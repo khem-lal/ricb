@@ -24,6 +24,9 @@ export class ForgotpasswordPage {
   private baseUrl: String;
   public headers: any;
   status: any;
+  otpFlag: boolean = false;
+  regFlag: boolean = false;
+  otp: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
     public http: Http, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
@@ -32,16 +35,18 @@ export class ForgotpasswordPage {
       phoneNo: ['', Validators.required],
       cidNumber: ['', Validators.required]
     });
+    this.regFlag = true;
   }
 
   updatePassword(){
-    if(this.forgotPasswordForm.valid){
+    
       this.presentLoadingDefault();
       this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
 
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       this.headers = {headers};
+      console.log(this.cidNumber);
 
       this.http.get(this.baseUrl+'/updatePassword?cidNo='+this.cidNumber+'&mobileNo='+this.phoneNo+'&newPassword='+this.password, this.headers).map(res => res.json()).subscribe(
         data => {
@@ -81,6 +86,37 @@ export class ForgotpasswordPage {
           console.log("Error fetching data");
         }
       );
+    
+    
+  }
+
+  generateOtp(){
+    if(this.forgotPasswordForm.valid){
+      console.log(this.cidNumber);
+      
+    
+      var otp = Math.floor(100000 + Math.random() * 900000);
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      this.headers = {headers};
+      this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+
+      this.http.get(this.baseUrl+'/forgotpasswordotp?cidNumber='+this.cidNumber+'&otp='+otp, this.headers).map(res => res.json()).subscribe(
+          data => {
+            this.status = data[0].status;
+            if(this.status==1){
+              let smsContent = "Dear user, your MyRICB OTP is "+otp+'. Please do not share your OTP.';
+              //send to otp page
+              this.http.get('http://sms.edruk.com.bt/smsclients/smsclients.php?mobile='+this.phoneNo+'&smsmsg='+smsContent+'&shortcode=RICB', this.headers)
+              .map(res => res.json()).subscribe(
+                data => {
+                  //do nothing after sending sms;
+                });
+                //this.otp = otp;
+                this.otpFlag = true;
+                this.regFlag = false;
+              }
+          });
     }else{
       let alert = this.alertCtrl.create({
         subTitle: 'All fields are required.',
@@ -92,7 +128,38 @@ export class ForgotpasswordPage {
       }); 
       alert.present();
     }
-    
+  }
+
+  verifyOTP(){
+    this.presentLoadingDefault();
+    this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    this.headers = {headers};
+
+    this.http.get(this.baseUrl+'/verifyotp?otp='+this.otp+'&cid='+this.cidNumber, this.headers).map(res => res.json()).subscribe(
+      data => {
+        this.status = data[0].status;
+        if(this.status == 0){
+          let alert = this.alertCtrl.create({
+            subTitle: 'Invalid OTP. Please register again.',
+            buttons: [
+              {
+                text: 'OK',
+                handler: () => {
+                  this.otpFlag = false;
+                  this.regFlag = true;
+                }
+              }
+            ]
+          }); 
+          alert.present();
+        }
+        else{
+          this.updatePassword();
+        }
+      });
   }
 
   presentLoadingDefault() {

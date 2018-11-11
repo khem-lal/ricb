@@ -5,16 +5,28 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>IMMEDIATE ANNUITY DETAILS</ion-title>
-  </ion-navbar>
+    <ion-navbar hideBackButton>
+        <button ion-button menuToggle class=""> 
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>IMMEDIATE ANNUITY SCHEME</ion-title>
+        <ion-buttons right>
+        <button class="back-button disable-hover bar-button bar-button-ios back-button-ios bar-button-default bar-button-default-ios show-back-button" 
+            ion-button="bar-button" ng-reflect-klass="back-button" navPop>
+            <span class="button-inner">
+            <ion-icon class="back-button-icon icon" role="img" 
+            aria-label="arrow back" ng-reflect-klass="back-button-icon"  
+            ng-reflect-name="arrow-back">
+            </ion-icon>
+            <span class="back-button-text" style="transform: translateX(0px);" ng-reflect-klass="back-button-text" ng-reflect-ng-class="back-button-text-ios">Back</span></span><div class="button-effect"></div></button>
+        </ion-buttons>
+    </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-item *ngFor="let lifeDto of policyDtls" class="politem">
+  <ion-item *ngFor="let lifeDto of policyDtls" class="politem" text-wrap>
     <ion-row> 
         <ion-col col-5><strong>Name </strong></ion-col>
         <ion-col col-1>:</ion-col>

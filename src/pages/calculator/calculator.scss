@@ -1,5 +1,11 @@
 page-calculator {
     .ionframe{
         height: 288px !important;
+        width: 100%;
+    }
+
+    .icon{
+        position: relative;
+        float: right;
     }
 }

@@ -5,6 +5,7 @@ page-policynumber {
     }
     .title {
         color: #ffffff !important;
+        margin-top: 10px;
     }
     .toolbar-title-md  {
         color: #ffffff !important;
@@ -20,5 +21,9 @@ page-policynumber {
     .errorMsg {
         background: red;
         color: #ffffff;
+    }
+    .icon{
+        position: relative;
+        float: right;
     }
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Http } from '@angular/http';
+import { PaymentPage } from '../payment/payment';
 
 @IonicPage()
 @Component({
@@ -13,19 +14,24 @@ export class DeferreddetailsPage {
   private baseUrl: String;
   polNo: any;
   policyDtls: any;
-  amountToPay: any;
+  amountToPay: any = 0;
   paymentUrl: any;
   premiumAmount: any;
+  premiumType: String;
+  monthlyFlag: boolean = false;
+  yearlyFlag: boolean = false;
 
   cidNo: String;
   custName: String;
   deptCode: String;
   policyNo: String;
   status: any;
+  remitterCid: String;
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams, 
     public http: Http, public loadingCtrl: LoadingController, public inAppBrowser: InAppBrowser) {
       this.polNo = navParams.get('param');
+      this.remitterCid = navParams.get('remitterCid');
      
       this.presentLoadingDefault();
       this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
@@ -34,11 +40,18 @@ export class DeferreddetailsPage {
         data => {
           this.policyDtls = data;
           this.premiumAmount = data[0].PREMIUMAMOUNT;
+          this.premiumType = data[0].PREMIUMTYPE;
 
           this.cidNo = data[0].CITYZENSHIPID;
           this.custName = data[0].CUSTNAME;
-          this.deptCode = "DA";
+          this.deptCode = "3";
           this.policyNo = data[0].PLOICY_NO;
+
+          if(this.premiumType == "SSS"){
+            this.monthlyFlag = true;
+          }else{
+            this.yearlyFlag = true;
+          }
         },
         err => {
           console.log("Error fetching data");
@@ -69,32 +82,48 @@ export class DeferreddetailsPage {
   }
 
   confirmpayment(){
-    var orderNo = Math.floor(1000000000 + Math.random() * 9000000000);
-    this.insertPayment(orderNo);
-    let alert = this.alertCtrl.create({
-      title: 'Confirm Your Payment',    
-      subTitle: 'Total Amount Payable is Nu. '+this.amountToPay+'<p> for Policy No: '+this.polNo+'</p>',
-      buttons: [
-        {
-          text: 'OK',
-          handler: () => {
-            this.amountToPay="1";
-            this.paymentUrl = "https://apps.ricb.com.bt:8443/paymentgateway/ARapps.jsp?amtToPay="+this.amountToPay+
-            "&id=C&policy_no="+this.polNo+"&order_No="+orderNo;
-            let target = "_self";
-            this.inAppBrowser.create(this.paymentUrl, target);
+    if(this.amountToPay == 0 || this.amountToPay == 'undefined'){
+      let alert = this.alertCtrl.create({
+        title: 'Message',    
+        subTitle: 'Amount cannot be 0. Please select installment',
+        buttons: [
+          {
+            text: 'OK'
           }
-        }
-      ]
-    }); 
-    alert.present();
+        ]
+      }); 
+      alert.present();
+      return;
+    }
+    else{
+      var orderNo = Math.floor(1000000000 + Math.random() * 9000000000);
+      this.insertPayment(orderNo);
+      let alert = this.alertCtrl.create({
+        title: 'Confirm Your Payment',    
+        subTitle: 'Total Amount Payable is Nu. '+this.amountToPay+' for Policy No: '+this.polNo,
+        buttons: [
+          {
+            text: 'OK',
+            handler: () => {
+              //this.amountToPay="1";
+              this.paymentUrl = "https://apps.ricb.com.bt:8443/paymentgateway/ARapps.jsp?amtToPay="+this.amountToPay+
+              "&id=C&policy_no="+this.polNo+"&order_No="+orderNo;
+              // let target = "_self";
+              // this.inAppBrowser.create(this.paymentUrl, target);
+              this.navCtrl.push(PaymentPage, {param: this.paymentUrl, type: "payment"});
+            }
+          }
+        ]
+      }); 
+      alert.present();
+    }
   }
 
   insertPayment(orderNo){
     console.log('insertpayment');
     this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
 
-    this.http.get(this.baseUrl+'/insertLifePayment?cidNo='+this.cidNo+'&custName='+this.custName+'&deptCode='+this.deptCode+'&policyNo='+this.policyNo+'&amount='+this.amountToPay+'&orderNo='+orderNo).map(res => res.json()).subscribe(
+    this.http.get(this.baseUrl+'/insertLifePayment?cidNo='+this.cidNo+'&custName='+this.custName+'&deptCode='+this.deptCode+'&policyNo='+this.policyNo+'&amount='+this.amountToPay+'&orderNo='+orderNo+'&remitterCid='+this.remitterCid).map(res => res.json()).subscribe(
       data => {
         this.status = data;
         if(this.status == "1"){

@@ -1,15 +1,28 @@
 
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar hideBackButton>
+    <button ion-button menuToggle class=""> 
+        <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Credit Investment</ion-title>
+    <ion-buttons right>
+    <button class="back-button disable-hover bar-button bar-button-ios back-button-ios bar-button-default bar-button-default-ios show-back-button" 
+        ion-button="bar-button" ng-reflect-klass="back-button" navPop>
+        <span class="button-inner">
+        <ion-icon class="back-button-icon icon" role="img" 
+        aria-label="arrow back" ng-reflect-klass="back-button-icon"  
+        ng-reflect-name="arrow-back">
+        </ion-icon>
+        <span class="back-button-text" style="transform: translateX(0px);" ng-reflect-klass="back-button-text" ng-reflect-ng-class="back-button-text-ios">Back</span></span><div class="button-effect"></div></button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-item *ngFor="let lifeDto of policyDtls" class="politem">
+  <ion-item *ngFor="let lifeDto of policyDtls" class="politem" text-wrap>
     <label class="polstatus" style="text-align: center">Status : {{lifeDto.STATUS}}</label>
     <ion-row> 
         <ion-col col-5><strong>Account Holder </strong></ion-col>
@@ -37,7 +50,7 @@
         <ion-col col-6>{{lifeDto.REPAY_DATE}}</ion-col>
     </ion-row>
     <ion-row> 
-        <ion-col col-5><strong>Term </strong></ion-col>
+        <ion-col col-5><strong>Term (Months) </strong></ion-col>
         <ion-col col-1>:</ion-col> 
         <ion-col col-6>{{lifeDto.TERM}}</ion-col>
     </ion-row>
@@ -51,11 +64,11 @@
         <ion-col col-1>:</ion-col> 
         <ion-col col-6>{{lifeDto.EMI}}</ion-col>
     </ion-row>
-    <ion-row> 
+    <!-- <ion-row> 
         <ion-col col-5><strong>Repay Mode </strong></ion-col>
         <ion-col col-1>:</ion-col> 
         <ion-col col-6>{{lifeDto.REPAY_MODE}}</ion-col>
-    </ion-row>
+    </ion-row> -->
     <ion-row> 
         <ion-col col-5><strong>Next Repayment </strong></ion-col>
         <ion-col col-1>:</ion-col> 
@@ -67,11 +80,15 @@
     </ion-row>
     <ion-row> 
       <ion-col col-12><strong> 
-        <ion-input type="number" class="textAmt" placeholder="Enter Amount" [(ngModel)]="amountToPay" round text-center></ion-input>
-      </strong></ion-col>
-  </ion-row>
-  <p></p>
-    <button ion-button block color="facebook" type="submit" (click)="confirmpayment()">
+        <ion-input type="number" (click)="clearValue()" class="textAmt" placeholder="0" [(ngModel)]="amountToPay" round text-center></ion-input>
+      </strong>
+      </ion-col>
+    </ion-row>
+    <p></p>
+    <button [hidden]="!payButton" ion-button block color="facebook" type="submit" (click)="confirmpayment()">
       PROCEED TO PAY
     </button>
+    <label [hidden]="!statusMessage" class="lapsedMsg">
+        <strong> Your policy is inactive, Visit RICB office to review your policy.</strong>
+    </label>
 </ion-content>

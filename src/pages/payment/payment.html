@@ -1,0 +1,44 @@
+
+<ion-header class="headerbar">
+  <ion-navbar hideBackButton>
+      <button ion-button menuToggle class=""> 
+          <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title [hidden]="!paymentTitle">Payment</ion-title>
+      <!-- <ion-title [hidden]="!reportTitle">Statement</ion-title> -->
+      <ion-buttons right>
+      <button class="back-button disable-hover bar-button bar-button-ios back-button-ios bar-button-default bar-button-default-ios show-back-button" 
+          ion-button="bar-button" ng-reflect-klass="back-button" navPop>
+          <span class="button-inner">
+          <ion-icon class="back-button-icon icon" role="img" 
+          aria-label="arrow back" ng-reflect-klass="back-button-icon"  
+          ng-reflect-name="arrow-back">
+          </ion-icon>
+          <span class="back-button-text" style="transform: translateX(0px);" ng-reflect-klass="back-button-text" ng-reflect-ng-class="back-button-text-ios">Back</span></span><div class="button-effect"></div></button>
+      </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <iframe [src]="paymentUrl" scrolling="yes" width="100%" height="100%">
+    </iframe>
+    <!-- <label class="polstatus" text-center>Mini Statement</label>
+    <ion-grid>
+        <ion-row>
+            <ion-col>Due Month</ion-col>
+            <ion-col>Employee Cont</ion-col>
+            <ion-col>Employer Cont</ion-col>
+            <ion-col>Int. on Employee Cont</ion-col>
+            <ion-col>Int. on Employer Cont</ion-col>
+        </ion-row>
+        <ion-row *ngFor="let statementDTO of returnType">
+          <ion-col>
+            {{statementDTO.DUE_MONTH}}
+          </ion-col>
+        </ion-row>
+        
+    </ion-grid> -->
+    
+    <!-- <button ion-button block color="facebook" (click)="downloadAndOpenPdf()" right>Download full report</button>   -->
+    
+</ion-content>

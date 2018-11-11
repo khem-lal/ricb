@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Http } from '@angular/http';
 import { HomePage } from '../home/home';
 import { SqliteProvider } from '../../providers/sqlite/sqlite';
@@ -38,7 +38,10 @@ export class RegistrationformPage {
       uname: ['', Validators.required],
       password: ['', Validators.required],
       phoneNo: ['', Validators.required],
-      email: ['', Validators.required],
+      email: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      ])),
       cidNumber: ['', Validators.required]
     });
     this.regFlag = true;
@@ -63,7 +66,8 @@ export class RegistrationformPage {
           if(this.status==1){
             let smsContent = "Dear user, your RICB Pay user registration OTP is "+otp+'. Please do not share your OTP.';
             //send to otp page
-            this.http.get('http://sms.edruk.com.bt/smsclients/smsclients.php?mobile='+this.phoneNo+'&smsmsg='+smsContent+'&shortcode=RICB', this.headers)
+            //this.http.get('http://sms.edruk.com.bt/smsclients/smsclients.php?mobile='+this.phoneNo+'&smsmsg='+smsContent+'&shortcode=RICB', this.headers)
+            this.http.get('http://202.144.136.77/api/gateway.aspx?action=send&username=admin&passphrase=123456&message='+smsContent+'&phone='+this.phoneNo, this.headers)
             .map(res => res.json()).subscribe(
               data => {
                 //do nothing after sending sms;
@@ -138,7 +142,7 @@ export class RegistrationformPage {
     headers.append('Content-Type', 'application/json');
     this.headers = {headers};
 
-    this.http.get(this.baseUrl+'/verifyotp?&otp='+this.otp, this.headers).map(res => res.json()).subscribe(
+    this.http.get(this.baseUrl+'/verifyotp?otp='+this.otp+'&cid='+this.cidNumber, this.headers).map(res => res.json()).subscribe(
       data => {
         this.status = data[0].status;
         if(this.status == 0){

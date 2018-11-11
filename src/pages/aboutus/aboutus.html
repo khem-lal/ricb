@@ -1,12 +1,14 @@
 
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle class="title"> 
-      <ion-icon name="menu"></ion-icon>
-    </button>
+    <ion-buttons left>
+      <button ion-button icon-only (click)="goToHome()">
+          <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title>About Us</ion-title>
     <ion-buttons right> 
-      <button ion-button icon-only>
+      <button ion-button icon-only (click)="callPage()">
         <ion-icon  name="call"></ion-icon>
       </button>
     </ion-buttons>
@@ -16,12 +18,12 @@
 
 <ion-content padding class="about">
     <ion-title center>About Us</ion-title>
-    The Royal Insurance Corporation of Bhutan Limited (RICB) is the country's second oldest financial 
+    <p>The Royal Insurance Corporation of Bhutan Limited (RICB) is the country's second oldest financial 
     institute incorporated on 7th January 1975 under the Royal Charter of His Majesty the Fourth Druk Gyalpo 
-    Jigme Singye Wangchuck. RICB is the only multi-faceted financial service provider in the kingdom catering 
-    Life Insurance, General Insurance, Credit Facilities and other Social Security Schemes.
+    Jigme Singye Wangchuck. RICB offers various services such as  
+    Life Insurance, General Insurance, Credit Facilities and other Social Security Schemes.</p>
     <p><ion-title left><strong>Vision:</strong></ion-title></p>
-    <i>To be the premier financial service provider in the country and beyond, seuring the ever evolving 
+    <i>To be the premier financial service provider in the country and beyond, securing the ever evolving 
       aspirations of the society.
     </i>
     <p><ion-title><strong>Mission:</strong></ion-title></p>

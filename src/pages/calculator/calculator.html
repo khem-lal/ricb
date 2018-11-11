@@ -1,12 +1,14 @@
 
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle class="title"> 
-      <ion-icon name="menu"></ion-icon>
-    </button>
+    <ion-buttons left>
+      <button ion-button icon-only (click)="goToHome()">
+          <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title>Calculator</ion-title>
     <ion-buttons right> 
-      <button ion-button icon-only>
+      <button ion-button icon-only (click)="callPage()">
         <ion-icon  name="call"></ion-icon>
       </button>
     </ion-buttons>
@@ -16,7 +18,26 @@
 
 <ion-content padding>
   <form method="post">
-    <ion-card>
+    <ion-list>
+      <div text-left>
+        <ion-item color="primary">
+          <p>
+            <span (click)="openCalculator('credit')"> CREDIT CALCULATOR  <ion-icon name="arrow-forward"  end></ion-icon></span>
+          </p>
+        </ion-item>
+        <ion-item color="primary">
+          <p>
+            <span (click)="openCalculator('installment')"> INSTALLMENT CALCULATOR  <ion-icon name="arrow-forward"  end></ion-icon></span>
+          </p>
+        </ion-item>
+        <ion-item color="primary">
+          <p>
+            <span (click)="openCalculator('interest')"> INTEREST CALCULATOR  <ion-icon name="arrow-forward"  end></ion-icon></span>
+          </p>
+        </ion-item>
+      </div>
+    </ion-list>
+    <!-- <ion-card>
       <button (click)="openCalculator('credit')" ion-button block color="facebook" type="submit">
         CREDIT CALCULATOR
       </button>
@@ -26,23 +47,23 @@
       <button (click)="openCalculator('interest')" ion-button block color="facebook" type="submit">
         INTEREST CALCULATOR
       </button>
-    </ion-card>
+    </ion-card> -->
 
     <div [hidden]="!creditCalculator"> 
       <ion-title>Credit Calculator</ion-title>
-      <iframe src="https://www.ricb.bt/calculator/credit.htm" class="ionframe">
+      <iframe src="https://apps.ricb.com.bt/san/calculator/credit.htm" class="ionframe">
         <p>Your browser does not support iframes.</p>
       </iframe>
     </div>
     <div [hidden]="!installmentCalculator"> 
       <ion-title>Installment Calculator</ion-title>
-      <iframe src="https://www.ricb.bt/calculator/Installment.htm" class="ionframe">
+      <iframe src="https://apps.ricb.com.bt/san/calculator/Installment.htm" class="ionframe">
         <p>Your browser does not support iframes.</p>
       </iframe>
     </div>
     <div [hidden]="!interestCalculator"> 
       <ion-title>Interest Calculator</ion-title>
-      <iframe src="https://www.ricb.bt/calculator/interest.htm" class="ionframe">
+      <iframe src="https://apps.ricb.com.bt/san/calculator/interest.htm" class="ionframe">
         <p>Your browser does not support iframes.</p>
       </iframe>
     </div>
