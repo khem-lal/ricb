@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, AlertController, LoadingController
 import { Http } from '@angular/http';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { PaymentPage } from '../payment/payment';
-import { empty } from 'rxjs/Observer';
 
 @IonicPage()
 @Component({
@@ -28,6 +27,8 @@ export class CreditaccountnumberPage {
   statusMessage: boolean = false;
   policyStatus: String;
   remitterCid: String;
+  paymentOption: boolean = false;
+  amtToPay: boolean = false;
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams, 
     public http: Http, public loadingCtrl: LoadingController, public inAppBrowser: InAppBrowser) {
@@ -35,14 +36,16 @@ export class CreditaccountnumberPage {
       this.polNo = navParams.get('param');
       this.paymentType = navParams.get('payType');
       this.remitterCid = navParams.get('remitterCid');
+      //this.decimalPipe.transform(this.amountToPay, '1.2-2');
      
+      this.paymentOption = true;
+      this.amtToPay = true;
       this.presentLoadingDefault();
-      this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+      this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
 
       this.http.get(this.baseUrl+'/creditinvestmentdetails?accountNo='+this.polNo).map(res => res.json()).subscribe(
         data => {
           this.policyDtls = data;
-
           this.cidNo = data[0].CID_NO;
           this.custName = data[0].ACCOUNT_HOLDER;
           this.policyStatus = data[0].STATUS;
@@ -69,13 +72,7 @@ export class CreditaccountnumberPage {
       );
   }
 
-  clearValue(){
-    if(this.amountToPay = 0){
-      console.log("clearing values");
-      this.amountToPay = empty;
-    }
-  }
-
+ 
   presentLoadingDefault() {
     let loading = this.loadingCtrl.create({
       content: 'Please wait...'
@@ -89,10 +86,10 @@ export class CreditaccountnumberPage {
   }
 
   confirmpayment(){
-    if(this.amountToPay == 0 || this.amountToPay == 'undefined' || this.amountToPay == ''){
+    if(this.amountToPay == 0 || this.amountToPay == undefined || this.amountToPay == ''){
       let alert = this.alertCtrl.create({
         title: 'Message',    
-        subTitle: 'Amount cannot be 0.',
+        subTitle: 'Amount cannot be empty.',
         buttons: [
           {
             text: 'OK'
@@ -112,8 +109,8 @@ export class CreditaccountnumberPage {
           {
             text: 'OK',
             handler: () => {
-              this.amountToPay="1";
-              this.paymentUrl = "https://apps.ricb.com.bt:8443/paymentgateway/ARapps.jsp?amtToPay="+this.amountToPay+
+              //this.amountToPay="1";
+              this.paymentUrl = "https://apps.ricb.bt:8443/paymentgateway/ARapps.jsp?amtToPay="+this.amountToPay+
               "&id=C&policy_no="+this.polNo+"&order_No="+orderNo;
               // let target = "_self";
               // this.inAppBrowser.create(this.paymentUrl, target);
@@ -129,7 +126,7 @@ export class CreditaccountnumberPage {
 
   insertPayment(orderNo){
     console.log('insertpayment');
-    this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+    this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
 
     this.http.get(this.baseUrl+'/insertLifePayment?cidNo='+this.cidNo+'&custName='+this.custName+'&deptCode='+this.deptCode+'&policyNo='+this.policyNo+'&amount='+this.amountToPay+'&orderNo='+orderNo+'&remitterCid='+this.remitterCid).map(res => res.json()).subscribe(
       data => {
@@ -142,6 +139,15 @@ export class CreditaccountnumberPage {
         console.log("Error fetching data");
       }
     );
+  }
+
+  validateNumber(e: any){
+    let input = String.fromCharCode(e.charCode);
+    const reg = /^\d*(?:[.,]\d{1,2})?$/;
+
+    if (!reg.test(input)) {
+      e.preventDefault();
+    }
   }
 
 }

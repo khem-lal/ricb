@@ -28,7 +28,8 @@ export class BusinessPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, 
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, private callNumber: CallNumber) {
     this.presentLoadingDefault();
-    this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+    this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
+    console.log('base url is '+this.baseUrl);
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -82,7 +83,7 @@ export class BusinessPage {
     // id = id-1;
     // this.businessDtls = this.businessData[id].contents;
     this.presentLoadingDefault();
-    //this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+    //this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');

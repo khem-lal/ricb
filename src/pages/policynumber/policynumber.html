@@ -71,21 +71,15 @@
       </div>
     </ion-list>
     <div [hidden]="!deferredFlag">
-        <ion-thumbnail item-start center>
+        <!-- <ion-thumbnail item-start center>
             <img class="logo" src="assets/imgs/logo.png"/>
           </ion-thumbnail>
-          <p></p>
+          <p></p> -->
         <ion-card>
-          <ion-card-header text-wrap>  
+          <!-- <ion-card-header text-wrap>  
             Financial Security and Services
-          </ion-card-header>
+          </ion-card-header> -->
           
-          <!-- <button (click)="policyDetails('', 'immediate')" ion-button block color="facebook" type="submit">
-            IMMEDIATE ANNUITY SCHEME
-          </button>
-          <button (click)="policyDetails('', 'deferred')" ion-button block color="facebook" type="submit">
-              DEFERRED ANNUITY SCHEME
-          </button> -->
           <ion-list>
             <div text-left>
               <ion-item color="primary" (click)="policyDetails('', 'immediate')">
@@ -93,6 +87,7 @@
                   <span (click)="policyDetails('', 'immediate')"> IMMEDIATE ANNUITY SCHEME  <ion-icon name="arrow-forward"  end></ion-icon></span>
                 </p>
               </ion-item>
+              <p></p>
               <ion-item color="primary" (click)="policyDetails('', 'deferred')">
                 <p>
                   <span (click)="policyDetails('', 'deferred')"> DEFERRED ANNUITY SCHEME  <ion-icon name="arrow-forward"  end></ion-icon></span>
@@ -141,7 +136,7 @@
             <ion-card-header>  
               PAYABLE ACCOUNTS
             </ion-card-header>
-            
+            <p></p>
             <!-- <button (click)="policyDetails('', 'creditOthers')" ion-button block color="facebook" type="submit">
               CREDIT INVESTMENT
             </button>
@@ -154,19 +149,21 @@
   
           <ion-list>
             <div text-left>
-              <ion-item color="primary">
+              <ion-item color="primary" (click)="policyDetails('', 'creditOthers')">
                 <p>
-                  <span (click)="policyDetails('', 'creditOthers')"> CREDIT & INVESTMENT  <ion-icon name="arrow-forward"  end></ion-icon></span>
+                  <span> CREDIT & INVESTMENT  <ion-icon name="arrow-forward"  end></ion-icon></span>
                 </p>
               </ion-item>
-              <ion-item color="primary">
+              <p></p>
+              <ion-item color="primary" (click)="policyDetails('', 'lifeOthers')">
                 <p>
-                  <span (click)="policyDetails('', 'lifeOthers')"> LIFE INSURANCE  <ion-icon name="arrow-forward"  end></ion-icon></span>
+                  <span> LIFE INSURANCE  <ion-icon name="arrow-forward"  end></ion-icon></span>
                 </p>
               </ion-item>
-              <ion-item color="primary">
+              <p></p>
+              <ion-item color="primary" (click)="policyDetails('', 'deferredOthers')">
                 <p>
-                  <span (click)="policyDetails('', 'deferredOthers')"> DEFERRED ANNUITY  <ion-icon name="arrow-forward"  end></ion-icon></span>
+                  <span> DEFERRED ANNUITY  <ion-icon name="arrow-forward"  end></ion-icon></span>
                 </p>
               </ion-item>
             </div>
@@ -288,9 +285,9 @@
                 <ion-col>Nu. {{policyNumber.EECONTRIBUTION}}</ion-col>
             </ion-row>
           </ion-item>
-        <button (click)="policyDetails(policyNumber.CITIZENID, 'ppfReportPdf')" ion-button block color="facebook" type="submit">
+          <button (click)="policyDetails(policyNumber.CITIZENID, 'ppfReportPdf')" ion-button block color="facebook" type="submit">
           VIEW 
-        </button>
+          </button>
       </div>
   
     

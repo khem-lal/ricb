@@ -50,7 +50,7 @@ export class RegistrationformPage {
   registerUser(){
     if(this.registrationForm.valid){
       this.presentLoadingDefault();
-      this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+      this.baseUrl = 'http://apps.ricb.bt:8080/ricbapi/api/ricb';
 
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
@@ -67,7 +67,7 @@ export class RegistrationformPage {
             let smsContent = "Dear user, your RICB Pay user registration OTP is "+otp+'. Please do not share your OTP.';
             //send to otp page
             //this.http.get('http://sms.edruk.com.bt/smsclients/smsclients.php?mobile='+this.phoneNo+'&smsmsg='+smsContent+'&shortcode=RICB', this.headers)
-            this.http.get('http://202.144.136.77/api/gateway.aspx?action=send&username=admin&passphrase=123456&message='+smsContent+'&phone='+this.phoneNo, this.headers)
+            this.http.get('http://202.144.136.77/api/gateway.aspx?action=send&username=ricb&passphrase=12345678&message='+smsContent+'&phone='+this.phoneNo, this.headers)
             .map(res => res.json()).subscribe(
               data => {
                 //do nothing after sending sms;
@@ -79,7 +79,7 @@ export class RegistrationformPage {
           else if(this.status==2){
             let alert = this.alertCtrl.create({
               title: 'Registration',    
-              subTitle: 'CID or Mobile Number already registered. Please try with different cid or mobile number',
+              subTitle: 'CID or Mobile Number already registered.',
               buttons: [
                 {
                   text: 'OK',
@@ -136,7 +136,7 @@ export class RegistrationformPage {
 
   verifyOTP(){
     this.presentLoadingDefault();
-    this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+    this.baseUrl = 'http://apps.ricb.bt:8080/ricbapi/api/ricb';
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');

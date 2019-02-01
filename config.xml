@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>myRICB</name>
+<widget id="bt.ricb" version="0.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>MyRICB</name>
     <description>RICBL Utility App</description>
     <author email="khemlallica@gmail.com" href="http://ionicframework.com/">Khemlal Chhetri</author>
     <content src="index.html" />
-    <access origin="http://apps.ricb.com.bt/*" />
+    <access origin="http://apps.ricb.bt/*" />
     <access origin="content:///*" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -103,5 +103,5 @@
     <plugin name="cordova-plugin-filepath" spec="^1.4.2" />
     <plugin name="cordova-plugin-android-permissions" spec="^1.0.0" />
     <engine name="browser" spec="~5.0.4" />
-    <engine name="android" spec="^7.0.0" />
+    <engine name="android" spec="~7.0.0" />
 </widget>

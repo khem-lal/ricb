@@ -37,7 +37,7 @@ import { DatePipe } from '@angular/common';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { DocumentViewer } from '@ionic-native/document-viewer';
 import { File } from '@ionic-native/file';
-import { PdfViewerComponent } from 'ng2-pdf-viewer';
+//import { PdfViewerComponent } from 'ng2-pdf-viewer';
 import { IonicStorageModule } from '@ionic/storage';
 import { FilePath } from '@ionic-native/file-path';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
@@ -65,8 +65,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     OthersPage,
     ForgotpasswordPage,
     UserprofilePage,
-    PaymentPage,
-    PdfViewerComponent
+    PaymentPage 
+    //PdfViewerComponent*/
   ],
   imports: [
     BrowserModule,

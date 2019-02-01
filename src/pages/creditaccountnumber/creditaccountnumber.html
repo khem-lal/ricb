@@ -64,31 +64,30 @@
         <ion-col col-1>:</ion-col> 
         <ion-col col-6>{{lifeDto.EMI}}</ion-col>
     </ion-row>
-    <!-- <ion-row> 
-        <ion-col col-5><strong>Repay Mode </strong></ion-col>
-        <ion-col col-1>:</ion-col> 
-        <ion-col col-6>{{lifeDto.REPAY_MODE}}</ion-col>
-    </ion-row> -->
     <ion-row> 
         <ion-col col-5><strong>Next Repayment </strong></ion-col>
         <ion-col col-1>:</ion-col> 
-        <ion-col col-6>{{lifeDto.NEXT_REPAYMT}}</ion-col>
+        <ion-col col-6>{{lifeDto.NEXT_REPAYMT12}}</ion-col>
     </ion-row>
-    </ion-item>
-    <ion-row> 
+    
+  </ion-item>   
+  <div [hidden]="!amtToPay">
+    <ion-row class="polstatus"> 
         <ion-col text-center><strong>Amount To Pay </strong></ion-col>
     </ion-row>
-    <ion-row> 
-      <ion-col col-12><strong> 
-        <ion-input type="number" (click)="clearValue()" class="textAmt" placeholder="0" [(ngModel)]="amountToPay" round text-center></ion-input>
-      </strong>
-      </ion-col>
+    <ion-row class="polstatus"> 
+        <ion-col col-12>
+            <ion-input type="number" class="textAmt" placeholder="0" [(ngModel)]="amountToPay" round text-center></ion-input>
+        </ion-col>
     </ion-row>
-    <p></p>
-    <button [hidden]="!payButton" ion-button block color="facebook" type="submit" (click)="confirmpayment()">
-      PROCEED TO PAY
-    </button>
-    <label [hidden]="!statusMessage" class="lapsedMsg">
-        <strong> Your policy is inactive, Visit RICB office to review your policy.</strong>
-    </label>
+  </div> 
+    <div [hidden]="!paymentOption">
+        
+        <button [hidden]="!payButton" ion-button block color="facebook" type="submit" (click)="confirmpayment()">
+        PROCEED TO PAY
+        </button>
+        <label [hidden]="!statusMessage" class="lapsedMsg">
+            <strong> Your policy is inactive, Visit RICB office to review your policy.</strong>
+        </label>
+    </div>
 </ion-content>

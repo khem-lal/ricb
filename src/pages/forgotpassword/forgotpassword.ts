@@ -41,7 +41,7 @@ export class ForgotpasswordPage {
   updatePassword(){
     
       this.presentLoadingDefault();
-      this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+      this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
 
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
@@ -99,7 +99,7 @@ export class ForgotpasswordPage {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       this.headers = {headers};
-      this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+      this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
 
       this.http.get(this.baseUrl+'/forgotpasswordotp?cidNumber='+this.cidNumber+'&otp='+otp, this.headers).map(res => res.json()).subscribe(
           data => {
@@ -107,7 +107,7 @@ export class ForgotpasswordPage {
             if(this.status==1){
               let smsContent = "Dear user, your MyRICB OTP is "+otp+'. Please do not share your OTP.';
               //send to otp page
-              this.http.get('http://sms.edruk.com.bt/smsclients/smsclients.php?mobile='+this.phoneNo+'&smsmsg='+smsContent+'&shortcode=RICB', this.headers)
+              this.http.get('http://202.144.136.77/api/gateway.aspx?action=send&username=ricb&passphrase=12345678&message='+smsContent+'&phone='+this.phoneNo, this.headers)
               .map(res => res.json()).subscribe(
                 data => {
                   //do nothing after sending sms;
@@ -132,7 +132,7 @@ export class ForgotpasswordPage {
 
   verifyOTP(){
     this.presentLoadingDefault();
-    this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+    this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');

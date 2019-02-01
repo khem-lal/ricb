@@ -41,27 +41,7 @@ export class PaymentPage {
       this.reportTitle = true;
     }else{
       this.paymentTitle = true;
-    }
-
-    //this.inAppBrowser.create(this.paymentUrl+'&embedded=true', '_blank');
-
-    // let headers = new Headers();
-    //   headers.append('Content-Type', 'application/json');
-    //   this.headers = {headers};
-
-    //   this.http.get(this.paymentUrl, this.headers).map(res => res.json()).subscribe(
-    //     data => {
-    //       if(data == ""){
-    //         //this.presentToast("You dont have a GIS account with RICB");
-    //       }
-    //       else{
-    //         this.returnType = data;
-    //       }
-    //     },
-    //     err => {
-    //       console.log("Error fetching data");
-    //     }
-    //   );
+    }    
   }
 
 }

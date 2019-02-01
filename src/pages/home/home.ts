@@ -23,25 +23,34 @@ export class HomePage {
   adImage: any;
   alertPresented: any;
   sqliteData: any;
+  hasCid: boolean = false;
+  
 
   constructor(public navCtrl: NavController, public formBuilder: FormBuilder, public http: Http, public platform: Platform,
     public loadingCtrl: LoadingController, private network: Network, public alertCtrl: AlertController, 
     private callNumber: CallNumber, public sqliteprovider: SqliteProvider, public toastCtrl: ToastController, 
-    private nav: Nav, public events: Events,) {
-      this.events.publish('userloggedout');
+    private nav: Nav, public events: Events) {
+    this.events.publish('userloggedout');
     this.registrationForm = this.formBuilder.group({
       cidNo: ['', Validators.required],
       password: ['', Validators.required]
     });
+    //this.noCid = true;
     //get cid if the user is registered
     this.platform.ready().then(() => {
       //get cid
-      /*this.sqliteprovider.getRegisteredCID().then(res => {
+      this.sqliteprovider.getRegisteredCID().then(res => {
         if(res){
           this.sqliteData = res;
           this.cidNo = this.sqliteData;
+          console.log('has cid');
+          this.hasCid = true;
+        }
+        else{
+          console.log('no cid');
+          this.hasCid = false;
         } 
-      });*/
+      });
       
     });
 
@@ -67,7 +76,7 @@ export class HomePage {
   ionViewDidLoad(){
     // watch network for a disconnect
 
-    this.network.onDisconnect().subscribe(() => {
+    /*this.network.onDisconnect().subscribe(() => {
       console.log('network was disconnected!');
       this.status = "disconnected";
       let vm = this;
@@ -79,7 +88,7 @@ export class HomePage {
           subTitle: 'Your internet connectivity is not available. Please enable it and try again',
           buttons: ['Ok']
         }).present();
-    });
+    });*/
 
     // watch network for a connection
     this.network.onConnect().subscribe(() => {
@@ -91,7 +100,7 @@ export class HomePage {
 
   getAdImage(){
     
-    this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+    this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -137,7 +146,7 @@ export class HomePage {
     if(this.registrationForm.valid){
       this.ionViewDidLoad();
       this.presentLoadingDefault();
-      this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+      this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
 
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
@@ -148,6 +157,15 @@ export class HomePage {
         data => {
           this.status = data[0].status;
           if(this.status==1){
+            //check if user exists in sqlite
+            this.sqliteprovider.getRegisteredCID().then(res => {
+              if(res){
+                //do nothing
+              }
+              else{
+                this.sqliteprovider.registerUser('', '', '', '', this.cidNo);
+              }
+            });
             this.navCtrl.setRoot(DashboardPage, {param: this.cidNo});
           }
           else {

@@ -22,7 +22,8 @@
       
       <ion-item>
         <ion-label color="primary" floating text-center>CID / Passport Number</ion-label>
-        <ion-input readonly="false" class="cidInput" ngControl="cidNo" type="number" [(ngModel)]="cidNo" formControlName="cidNo" round text-center></ion-input>
+        <ion-input readonly="{{hasCid ? 'true' : 'false'}}" class="cidInput" ngControl="cidNo" type="number" [(ngModel)]="cidNo" formControlName="cidNo" round text-center></ion-input>
+        <!-- <ion-input readonly="false" [hidden]="!noCid" class="cidInput" ngControl="cidNo" type="number" [(ngModel)]="cidNo" formControlName="cidNo" round text-center></ion-input> -->
       </ion-item>
      
       <ion-item>
@@ -42,7 +43,7 @@
     <ion-slides *ngIf="adImage && adImage.length" class="ion-slide" autoplay="5000" loop="true" speed="500" pager="true">
 
         <ion-slide *ngFor="let adImageDTO of adImage">
-          <img class="img-slide" src="http://apps.ricb.com.bt/san/add/{{adImageDTO.image}}" />
+          <img class="img-slide" src="https://apps.ricb.bt/san/add/{{adImageDTO.image}}" />
         </ion-slide>
       
       </ion-slides>

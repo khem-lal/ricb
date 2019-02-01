@@ -42,6 +42,7 @@ export class LifedetailsPage implements OnInit {
   nextRepayDate: any; 
   remitterCid: String; 
   payupButton: boolean = false;
+  installment: any;
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams, 
     public http: Http, public loadingCtrl: LoadingController, public inAppBrowser: InAppBrowser) {
@@ -50,7 +51,7 @@ export class LifedetailsPage implements OnInit {
     this.remitterCid = navParams.get('remitterCid');
      
     this.presentLoadingDefault();
-    this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+    this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
 
     this.http.get(this.baseUrl+'/generalinsurancedetails?policyNo='+this.polNo).map(res => res.json()).subscribe(
       data => {
@@ -64,7 +65,8 @@ export class LifedetailsPage implements OnInit {
         this.deptCode = "2";
         this.policyNo = data[0].POLICY_NO;
 
-        //let curDate = this.datepipe.transform(this.datetime, 'dd-MMM-yy');
+        let curDate = new Date();
+        console.log('current date is '+curDate);
 
         if(this.paymentMode == 'MONTHLY'){
           this.monthlyFlag = true;
@@ -124,12 +126,14 @@ export class LifedetailsPage implements OnInit {
   calculateInstallment(value){
     
     // if(value != 's'){
-       if(value == 0){
-         value = 1;
-       }
-       console.log(value);
+       //console.log(this.installment);
+      //  if(value == 0){
+      //    value = 2;
+      //  }
+       
     // }
-    this.amountToPay = this.premiumAmount * value;    
+    this.premiumAmount = this.premiumAmount.replace(',', '');
+    this.amountToPay = this.premiumAmount * this.installment;    
   }
 
   confirmpayment(){
@@ -156,8 +160,7 @@ export class LifedetailsPage implements OnInit {
           {
             text: 'OK',
             handler: () => {
-             
-              this.paymentUrl = "https://apps.ricb.com.bt:8443/paymentgateway/ARapps.jsp?amtToPay="+this.amountToPay+
+              this.paymentUrl = "https://apps.ricb.bt:8443/paymentgateway/ARapps.jsp?amtToPay="+this.amountToPay+
               "&id=C&policy_no="+this.polNo+"&order_No="+orderNo;
               //let target = "_self";
               //this.inAppBrowser.create(this.paymentUrl, target, 'location=false');
@@ -173,7 +176,7 @@ export class LifedetailsPage implements OnInit {
 
   insertPayment(orderNo){
     console.log('insertpayment');
-    this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+    this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
 
     this.http.get(this.baseUrl+'/insertLifePayment?cidNo='+this.cidNo+'&custName='+this.custName+'&deptCode='+this.deptCode+'&policyNo='+this.policyNo+'&amount='+this.premiumAmount+'&orderNo='+orderNo+'&remitterCid='+this.remitterCid).map(res => res.json()).subscribe(
       data => {

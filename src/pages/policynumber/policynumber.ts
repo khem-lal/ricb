@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController, ToastController, Events, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController, ToastController, Events } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LifedetailsPage } from '../lifedetails/lifedetails';
@@ -9,12 +9,10 @@ import { DeferreddetailsPage } from '../deferreddetails/deferreddetails';
 import { ImmediatedetailsPage } from '../immediatedetails/immediatedetails';
 import { OthersPage } from '../others/others';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { DocumentViewer } from '@ionic-native/document-viewer';
-import { FileTransfer } from '@ionic-native/file-transfer';
-import { File } from '@ionic-native/file';
-import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { PaymentPage } from '../payment/payment';
+import { EmailComposer } from '@ionic-native/email-composer';
 //declare var pdf: any;
-declare let cordova: any;
+//declare let cordova: any;
 /**
  * Generated class for the PolicynumberPage page.
  *
@@ -57,12 +55,10 @@ export class PolicynumberPage {
   
 
   constructor(public navCtrl: NavController, public inAppBrowser: InAppBrowser, public formBuilder: FormBuilder, 
-    public navParams: NavParams, public http: Http, public loadingCtrl: LoadingController, 
-    public alertCtrl: AlertController, private toastCtrl: ToastController, public events: Events, 
-    private platform: Platform, private file: File, private transfer: FileTransfer, 
-    private document: DocumentViewer, private androidPermissions: AndroidPermissions) {
+    public navParams: NavParams, public http: Http, public loadingCtrl: LoadingController,  private email: EmailComposer,
+    public alertCtrl: AlertController, private toastCtrl: ToastController, public events: Events) {
     
-    this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+    this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
     this.policyForm = this.formBuilder.group({
       fromDate: ['', Validators.required],
       toDate: ['', Validators.required]
@@ -147,7 +143,7 @@ export class PolicynumberPage {
     }
     if(type== "deferred"){
       this.presentLoadingDefault();
-      //this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+      //this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
 
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
@@ -178,7 +174,7 @@ export class PolicynumberPage {
     }
     if(type== "immediate"){
       this.presentLoadingDefault();
-      //this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+      //this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
 
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
@@ -246,7 +242,7 @@ export class PolicynumberPage {
     }
     if(type == "loanReport"){
       this.presentLoadingDefault();
-      this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+      this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
 
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
@@ -298,14 +294,14 @@ export class PolicynumberPage {
     if(type == "loanReportSubmit"){
       console.log(this.fromDate);
       this.presentLoadingDefault();
-      //this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';      
-        let pdfurl = 'http://apps.ricb.com.bt/san/report/loan-memo.php?CREDIT_ID='+polNo+'&FROM_DATE='+this.fromDate+'&TO_DATE='+this.toDate;
-        // let target = "_self";
-        // this.inAppBrowser.create(pdfurl, target);
-        //this.navCtrl.push(PaymentPage, {param: pdfurl, type: "report"}, this.headers);
+      //this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';      
+      let pdfurl = 'http://apps.ricb.bt/san/report/loan-memo.php?CREDIT_ID='+polNo+'&FROM_DATE='+this.fromDate+'&TO_DATE='+this.toDate;
+      //let target = "_self";
+      //this.inAppBrowser.create(pdfurl, target);
+      this.navCtrl.push(PaymentPage, {param: pdfurl, type: "report"}, this.headers);
 
         //store in local storage
-        this.androidPermissions.hasPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE)
+        /*this.androidPermissions.hasPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE)
         .then(status => {
           if (status.hasPermission) {
             let path = null;
@@ -351,38 +347,22 @@ export class PolicynumberPage {
         });
             });
           }
-        });
+        });*/
     }
     if(type == "gisReportPdf"){
       this.presentLoadingDefault();
-      let pdfurl = 'http://apps.ricb.com.bt/san/report/gis-memo.php?cid='+this.cidNo;
-      // let target = "_self";
-      // this.inAppBrowser.create(pdfurl, target);
-      //this.navCtrl.push(PaymentPage, {param: pdfurl, type: "report"});
-
-      let path = null;
- 
-        if (this.platform.is('ios')) {
-          path = this.file.documentsDirectory;
-        } else if (this.platform.is('android')) {
-          path = this.file.dataDirectory;
-        }
-    
-        const transfer = this.transfer.create();
-        transfer.download(pdfurl.toString(), path + 'Statements.pdf').then(entry => {
-          let url = entry.toURL();
-          this.document.viewDocument(url, 'application/pdf', {});
-        });
+      let pdfurl = 'http://apps.ricb.bt/san/report/gis-memo.php?cid='+this.cidNo;
+      this.navCtrl.push(PaymentPage, {param: pdfurl, type: "report"});
     }
     if(type == "ppfReportPdf"){
       this.presentLoadingDefault();
-      let pdfurl = 'https://apps.ricb.com.bt/san/report/ppf-memo.php?cid='+this.cidNo;
-      //let reporturl = this.baseUrl+'/ppfmemostatement?cidNumber='+this.cidNo;
-      // let target = "_self";
-      // this.inAppBrowser.create(pdfurl, target);
-      //this.navCtrl.push(PaymentPage, {param: pdfurl, type: "report", rpturl: reporturl}, this.headers);
+      let pdfurl = 'https://apps.ricb.bt/san/report/ppf-memo.php?cid='+this.cidNo;
+      this.navCtrl.push(PaymentPage, {param: pdfurl, type: "report"}, this.headers);
 
-      let path = null;
+      //this.sendMail(pdfurl);
+
+
+      /*let path = null;
  
       if (this.platform.is('ios')) {
         path = this.file.documentsDirectory;
@@ -394,7 +374,7 @@ export class PolicynumberPage {
       transfer.download(pdfurl.toString(), path + 'Statements.pdf').then(entry => {
         let url = entry.toURL();
         this.document.viewDocument(url, 'application/pdf', {});
-      });
+      });*/
     }
 
   }
@@ -412,6 +392,20 @@ export class PolicynumberPage {
     });
   
     toast.present();
+  }
+
+  sendMail(pdfurl){
+    let email = {
+      to: 'khemlallica@gmail.com',
+      cc: '',
+      attachments: [
+        pdfurl
+      ],
+      subject: 'My Cool Image',
+      body: 'Hey Simon, what do you thing about this image?',
+      isHtml: true
+    };
+    this.email.open(email);
   }
 
 }

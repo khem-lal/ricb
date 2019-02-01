@@ -28,6 +28,7 @@ export class DashboardPage {
   sqliteData: any;
   data: any[];
   @ViewChild(Navbar) navBar: Navbar;
+  //public loading = Loading.create();
 
   constructor(public platform: Platform, public navCtrl: NavController, public nav: Nav, public navParams: NavParams, public http: Http, 
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, public events: Events,  public sqliteprovider: SqliteProvider) {
@@ -77,7 +78,7 @@ export class DashboardPage {
  
   lifepage() {
     this.presentLoadingDefault();
-    this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+    this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -110,7 +111,7 @@ export class DashboardPage {
 
   creditpage(){
     this.presentLoadingDefault();
-    this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+    this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -144,7 +145,7 @@ export class DashboardPage {
 
   generalpage(){
     this.presentLoadingDefault();
-    this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+    this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -206,7 +207,7 @@ export class DashboardPage {
   presentLoadingDefault() {
     let loading = this.loadingCtrl.create({
       content: 'Please wait...',
-      duration: 4000
+      duration: 4000,
     });
 
     loading.onDidDismiss(() => {

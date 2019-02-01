@@ -27,6 +27,7 @@ export class DeferreddetailsPage {
   policyNo: String;
   status: any;
   remitterCid: String;
+  installment: any;
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams, 
     public http: Http, public loadingCtrl: LoadingController, public inAppBrowser: InAppBrowser) {
@@ -34,7 +35,7 @@ export class DeferreddetailsPage {
       this.remitterCid = navParams.get('remitterCid');
      
       this.presentLoadingDefault();
-      this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+      this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
 
       this.http.get(this.baseUrl+'/deferredannuitydetails?policyNo='+this.polNo).map(res => res.json()).subscribe(
         data => {
@@ -72,13 +73,20 @@ export class DeferreddetailsPage {
   }
 
   calculateInstallment(value){
-    console.log(value);
-    if(value != 's'){
-      if(value == 0){
-        value = 1;
-      }
-      this.amountToPay = this.premiumAmount * value;
-    }    
+    // console.log(value);
+    // if(value != 's'){
+    //   if(value == 0){
+    //     value = 1;
+    //   }
+      
+    // }   
+    this.premiumAmount = this.premiumAmount.replace(',', '');
+    //decimal pipe
+    //this.decimalPipe.transform(this.premiumAmount, '1.0-0');
+    //replace all special characters
+    //this.premiumAmount = this.premiumAmount.replace(/[^a-zA-Z0-9]/g, ""); 
+    //console.log(this.premiumAmount);
+    this.amountToPay = this.premiumAmount * this.installment;
   }
 
   confirmpayment(){
@@ -106,7 +114,7 @@ export class DeferreddetailsPage {
             text: 'OK',
             handler: () => {
               //this.amountToPay="1";
-              this.paymentUrl = "https://apps.ricb.com.bt:8443/paymentgateway/ARapps.jsp?amtToPay="+this.amountToPay+
+              this.paymentUrl = "https://apps.ricb.bt:8443/paymentgateway/ARapps.jsp?amtToPay="+this.amountToPay+
               "&id=C&policy_no="+this.polNo+"&order_No="+orderNo;
               // let target = "_self";
               // this.inAppBrowser.create(this.paymentUrl, target);
@@ -121,7 +129,7 @@ export class DeferreddetailsPage {
 
   insertPayment(orderNo){
     console.log('insertpayment');
-    this.baseUrl = 'https://apps.ricb.com.bt:8443/ricbapi/api/ricb';
+    this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
 
     this.http.get(this.baseUrl+'/insertLifePayment?cidNo='+this.cidNo+'&custName='+this.custName+'&deptCode='+this.deptCode+'&policyNo='+this.policyNo+'&amount='+this.amountToPay+'&orderNo='+orderNo+'&remitterCid='+this.remitterCid).map(res => res.json()).subscribe(
       data => {

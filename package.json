@@ -41,7 +41,6 @@
     "@ng-idle/keepalive": "^6.0.0-beta.3",
     "angular2-moment": "^1.9.0",
     "call-number": "^1.0.1",
-    "cordova-android": "^7.0.0",
     "cordova-browser": "~5.0.4",
     "cordova-pdf-generator": "file:node_modules\\cordova-pdf-generator",
     "cordova-plugin-advanced-http": "^1.11.1",
@@ -67,7 +66,8 @@
     "pdfmake": "^0.1.38",
     "rxjs": "5.5.11",
     "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.26"
+    "zone.js": "0.8.26",
+    "cordova-android": "~7.0.0"
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.11",
