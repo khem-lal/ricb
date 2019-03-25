@@ -41,6 +41,8 @@ import { File } from '@ionic-native/file';
 import { IonicStorageModule } from '@ionic/storage';
 import { FilePath } from '@ionic-native/file-path';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { BanklistPage } from '../pages/banklist/banklist';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 
 @NgModule({
   declarations: [
@@ -65,7 +67,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     OthersPage,
     ForgotpasswordPage,
     UserprofilePage,
-    PaymentPage 
+    PaymentPage,
+    BanklistPage
     //PdfViewerComponent*/
   ],
   imports: [
@@ -97,7 +100,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     OthersPage,
     ForgotpasswordPage,
     UserprofilePage,
-    PaymentPage
+    PaymentPage,
+    BanklistPage
   ],
   providers: [
     StatusBar,
@@ -113,7 +117,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     DocumentViewer,
     FileTransfer,
     FilePath,
-    AndroidPermissions
+    AndroidPermissions,
+    AppVersion
     
   ]
 })

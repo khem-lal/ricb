@@ -27,7 +27,7 @@ export class ImmediatedetailsPage {
       this.polNo = navParams.get('param');
      
       this.presentLoadingDefault();
-      this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
+      this.baseUrl = 'http://apps.ricb.bt:8080/ricbapi/api/ricb';
 
       this.http.get(this.baseUrl+'/immediateannuitydetails?policyNo='+this.polNo).map(res => res.json()).subscribe(
         data => {

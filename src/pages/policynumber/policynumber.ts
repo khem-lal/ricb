@@ -58,7 +58,7 @@ export class PolicynumberPage {
     public navParams: NavParams, public http: Http, public loadingCtrl: LoadingController,  private email: EmailComposer,
     public alertCtrl: AlertController, private toastCtrl: ToastController, public events: Events) {
     
-    this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
+    this.baseUrl = 'http://apps.ricb.bt:8080/ricbapi/api/ricb';
     this.policyForm = this.formBuilder.group({
       fromDate: ['', Validators.required],
       toDate: ['', Validators.required]
@@ -242,7 +242,7 @@ export class PolicynumberPage {
     }
     if(type == "loanReport"){
       this.presentLoadingDefault();
-      this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
+      this.baseUrl = 'http://apps.ricb.bt:8080/ricbapi/api/ricb';
 
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
@@ -289,13 +289,49 @@ export class PolicynumberPage {
     }
     
     if(type == "loanReportPdf"){
-      this.loanDateFlag = true;
+      //this.loanDateFlag = true;
+
+        let alert = this.alertCtrl.create({
+          title: 'Select Date',
+          
+          inputs: [
+            {
+              name: 'fromDate',
+              type : 'date',
+              placeholder: 'From Date'
+            },
+            {
+              name: 'toDate',
+              type : 'date',
+              placeholder: 'To Date'
+            }
+          ],
+
+          buttons: [
+            {
+              text: 'Submit',
+              role: 'submit',
+              handler: data => {
+                this.fromDate = data.fromDate;
+                this.toDate = data.toDate;
+                this.policyDetails(polNo, 'loanReportSubmit');
+                alert.dismiss();
+              }
+              
+            },
+            {
+              text: 'Cancel'             
+            }
+          ]
+        });
+        alert.present();
+      
     }
     if(type == "loanReportSubmit"){
-      console.log(this.fromDate);
+      //console.log("from Date is "+this.fromDate+" to Date is "+this.toDate);
       this.presentLoadingDefault();
       //this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';      
-      let pdfurl = 'http://apps.ricb.bt/san/report/loan-memo.php?CREDIT_ID='+polNo+'&FROM_DATE='+this.fromDate+'&TO_DATE='+this.toDate;
+      let pdfurl = 'https://apps.ricb.bt/san/report/loan-memo.php?CREDIT_ID='+polNo+'&FROM_DATE='+this.fromDate+'&TO_DATE='+this.toDate;
       //let target = "_self";
       //this.inAppBrowser.create(pdfurl, target);
       this.navCtrl.push(PaymentPage, {param: pdfurl, type: "report"}, this.headers);
@@ -351,7 +387,7 @@ export class PolicynumberPage {
     }
     if(type == "gisReportPdf"){
       this.presentLoadingDefault();
-      let pdfurl = 'http://apps.ricb.bt/san/report/gis-memo.php?cid='+this.cidNo;
+      let pdfurl = 'https://apps.ricb.bt/san/report/gis-memo.php?cid='+this.cidNo;
       this.navCtrl.push(PaymentPage, {param: pdfurl, type: "report"});
     }
     if(type == "ppfReportPdf"){

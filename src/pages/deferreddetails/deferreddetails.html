@@ -65,8 +65,8 @@
         <ion-col col-1>:</ion-col>
         <ion-col col-6>
             <ion-select class="selectInstallment" [(ngModel)]="installment" #C (ionChange)="calculateInstallment(C.value)">
-                <ion-option value="s" selected>Select Installment</ion-option>
-                <ion-option value="1">1</ion-option>
+                <!-- <ion-option value="s" selected>Select Installment</ion-option> -->
+                <ion-option value="1" selected>1</ion-option>
             </ion-select>
         </ion-col>
     </ion-row>
@@ -75,8 +75,8 @@
         <ion-col col-1>:</ion-col>
         <ion-col col-6>
           <ion-select class="selectInstallment" [(ngModel)]="installment" #C (ionChange)="calculateInstallment(C.value)">
-            <ion-option value="s" selected>Select Installment</ion-option>
-            <ion-option value="1">1 month</ion-option>
+            <!-- <ion-option value="s" selected>Select Installment</ion-option> -->
+            <ion-option value="1" selected>1 month</ion-option>
             <ion-option value="2">2 months</ion-option>
             <ion-option value="3">3 months</ion-option>
             <ion-option value="4">4 months</ion-option>
@@ -91,6 +91,28 @@
           </ion-select>
         </ion-col>
       </ion-row>
+        <ion-row [hidden]="!quarterlyFlag">
+            <ion-col col-5><strong><ion-label  class="politem" text-left>You want to pay for</ion-label> </strong></ion-col>
+            <ion-col col-1>:</ion-col>
+            <ion-col col-6>
+                <ion-select class="selectInstallment" [(ngModel)]="installment" #C (ionChange)="calculateInstallment(C.value)">
+                    <ion-option value="1" selected>1 Quarter</ion-option>
+                    <ion-option value="2">2 Quarter</ion-option>
+                    <ion-option value="3">3 Quarter</ion-option>
+                    <ion-option value="4">4 Quarter</ion-option>
+                </ion-select>
+            </ion-col>
+        </ion-row>   
+        <ion-row [hidden]="!halfyearlyFlag">
+            <ion-col col-5><strong><ion-label  class="politem" text-left>You want to pay for</ion-label> </strong></ion-col>
+            <ion-col col-1>:</ion-col>
+            <ion-col col-6>
+                <ion-select class="selectInstallment" [(ngModel)]="installment" #C (ionChange)="calculateInstallment(C.value)">
+                    <ion-option value="6" selected>1st Half</ion-option>
+                    <ion-option value="12">2nd Half</ion-option>
+                </ion-select>
+            </ion-col>
+        </ion-row>
     <ion-row> 
         <ion-col col-5><strong>Amount To Pay </strong></ion-col>
         <ion-col col-1>:</ion-col>

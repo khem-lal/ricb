@@ -29,7 +29,7 @@ export class FeedbackPage {
 
   sendEmail(){
 
-      this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
+      this.baseUrl = 'http://apps.ricb.bt:8080/ricbapi/api/ricb';
 
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');

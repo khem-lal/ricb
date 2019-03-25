@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
-import { Http } from '@angular/http';
+import { Http, RequestOptions } from '@angular/http';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { PaymentPage } from '../payment/payment';
+import { BanklistPage } from '../banklist/banklist';
 
 @IonicPage()
 @Component({
@@ -30,6 +30,10 @@ export class CreditaccountnumberPage {
   paymentOption: boolean = false;
   amtToPay: boolean = false;
 
+  finalcs: String;
+  checksumComp: string[]=[];
+  finalBankList: any[] = [];
+
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams, 
     public http: Http, public loadingCtrl: LoadingController, public inAppBrowser: InAppBrowser) {
       //this.amountToPay = 0;
@@ -41,7 +45,7 @@ export class CreditaccountnumberPage {
       this.paymentOption = true;
       this.amtToPay = true;
       this.presentLoadingDefault();
-      this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
+      this.baseUrl = 'http://apps.ricb.bt:8080/ricbapi/api/ricb';
 
       this.http.get(this.baseUrl+'/creditinvestmentdetails?accountNo='+this.polNo).map(res => res.json()).subscribe(
         data => {
@@ -110,11 +114,32 @@ export class CreditaccountnumberPage {
             text: 'OK',
             handler: () => {
               //this.amountToPay="1";
-              this.paymentUrl = "https://apps.ricb.bt:8443/paymentgateway/ARapps.jsp?amtToPay="+this.amountToPay+
+              /*this.paymentUrl = "https://apps.ricb.com.bt:8443/paymentgateway/ARapps.jsp?amtToPay="+this.amountToPay+
               "&id=C&policy_no="+this.polNo+"&order_No="+orderNo;
-              // let target = "_self";
-              // this.inAppBrowser.create(this.paymentUrl, target);
-              this.navCtrl.push(PaymentPage, {param: this.paymentUrl, type: "payment"});
+              this.navCtrl.push(PaymentPage, {param: this.paymentUrl, type: "payment"});*/
+
+              this.sendRequest(this.amountToPay).then(data=>
+                {
+                  this.finalcs=data.toString();
+                  this.checksumComp=this.finalcs.split("&");
+                  let txnId:string[]=this.checksumComp[0].split("=");
+                  let status:string[]=this.checksumComp[1].split("=");
+                  if(status[1]=="Success"){
+                    let bankList:string[]=this.checksumComp[2].split("=");
+                    let bankList1:string[]=bankList[1].split("~");
+                    let bankList2:string[]=bankList[1].split("#");
+                    for(let i =0; i<bankList2.length; i++){
+                       
+                      this.finalBankList.push({value: bankList2[i].split("~")[0], text: bankList2[(i)].split("~")[1]});
+                    }
+
+                    this.navCtrl.push(BanklistPage, {param: this.finalBankList, txnId: txnId[1], orderNo: orderNo, 
+                      cidNo: this.cidNo, policyNo: this.polNo, amount: this.amountToPay, type: 'credit'});
+                    this.presentLoadingDefault();
+                  }
+                  
+                 
+                });
             }
           }
         ]
@@ -124,9 +149,26 @@ export class CreditaccountnumberPage {
     
   }
 
+  sendRequest(amtToPay){
+    let opt: RequestOptions;
+    let myHeaders: Headers = new Headers;
+    
+    myHeaders.set('Accept','application/json; charset-utf-8');
+    myHeaders.append('Content-type', 'apaplication/json; charset-utf-8');
+    
+
+    return new Promise(resolve => {
+      this.http.post(this.baseUrl+'/paymentrequest?messagetype=AR&amount='+amtToPay+
+    '&email=feedback@ricb.bt',opt).map(res => res.text()).subscribe(data =>{ 
+    //console.log("data is "+data);
+      resolve(data); 
+      });
+    });
+  }
+
   insertPayment(orderNo){
     console.log('insertpayment');
-    this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
+    this.baseUrl = 'http://apps.ricb.bt:8080/ricbapi/api/ricb';
 
     this.http.get(this.baseUrl+'/insertLifePayment?cidNo='+this.cidNo+'&custName='+this.custName+'&deptCode='+this.deptCode+'&policyNo='+this.policyNo+'&amount='+this.amountToPay+'&orderNo='+orderNo+'&remitterCid='+this.remitterCid).map(res => res.json()).subscribe(
       data => {

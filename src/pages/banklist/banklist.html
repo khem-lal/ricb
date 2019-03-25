@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar hideBackButton>
+  <button ion-button menuToggle class=""> 
+      <ion-icon name="menu"></ion-icon>
+  </button>
+  <ion-title>Select Bank</ion-title>
+  <ion-buttons right>
+  <button class="back-button disable-hover bar-button bar-button-ios back-button-ios bar-button-default bar-button-default-ios show-back-button" 
+      ion-button="bar-button" ng-reflect-klass="back-button" navPop>
+      <span class="button-inner">
+      <ion-icon class="back-button-icon icon" role="img" 
+      aria-label="arrow back" ng-reflect-klass="back-button-icon"  
+      ng-reflect-name="arrow-back">
+      </ion-icon>
+      <span class="back-button-text" style="transform: translateX(0px);" ng-reflect-klass="back-button-text" ng-reflect-ng-class="back-button-text-ios">Back</span></span><div class="button-effect"></div></button>
+  </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding >
+  <ion-grid>
+    <ion-row>
+        <ion-col>
+            <ion-select class="textAmt" placeholder="Select Bank" #benfBank [(ngModel)]="bankName">
+              <ion-option *ngFor="let item of bankList" value="{{item.value}}">{{item.text}}</ion-option>
+            </ion-select>
+          </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col>
+         <ion-input class="textAmt" [(ngModel)]="bankAccNo" type="number" placeholder="Enter Account Number" #benfAccNo></ion-input>
+        </ion-col>
+      </ion-row>
+   <ion-row style="text-align: center;">
+     <ion-col size="12">
+       <button ion-button block color="facebook" (click)="submitAccountDetails()">
+         Submit
+       </button>
+     </ion-col>
+   </ion-row>
+  </ion-grid>
+  
+  </ion-content>

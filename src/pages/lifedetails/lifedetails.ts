@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
-import { Http } from '@angular/http';
+import { Http, RequestOptions } from '@angular/http';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { PaymentPage } from '../payment/payment';
+import { BanklistPage } from '../banklist/banklist';
+
 
 /**
  * Generated class for the LifedetailsPage page.
@@ -28,6 +29,7 @@ export class LifedetailsPage implements OnInit {
   monthlyFlag: boolean = false;
   quarterlyFlag: boolean = false;
   halfyearlyFlag: boolean = false;
+  yearlyFlag: boolean = false;
   payButton: boolean = false;
   dateExceedMessage: boolean = false;
   lapsedMessage: boolean = false;
@@ -43,6 +45,10 @@ export class LifedetailsPage implements OnInit {
   remitterCid: String; 
   payupButton: boolean = false;
   installment: any;
+  public headers: any;
+  finalcs: String;
+  checksumComp: string[]=[];
+  finalBankList: any[] = [];
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams, 
     public http: Http, public loadingCtrl: LoadingController, public inAppBrowser: InAppBrowser) {
@@ -51,7 +57,7 @@ export class LifedetailsPage implements OnInit {
     this.remitterCid = navParams.get('remitterCid');
      
     this.presentLoadingDefault();
-    this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
+    this.baseUrl = 'http://apps.ricb.bt:8080/ricbapi/api/ricb';
 
     this.http.get(this.baseUrl+'/generalinsurancedetails?policyNo='+this.polNo).map(res => res.json()).subscribe(
       data => {
@@ -71,15 +77,29 @@ export class LifedetailsPage implements OnInit {
         if(this.paymentMode == 'MONTHLY'){
           this.monthlyFlag = true;
           this.quarterlyFlag = false;
+          this.halfyearlyFlag = false;
+          this.yearlyFlag = false;
           this.paymentOption = true;
         }
         if(this.paymentMode == 'QUARTERLY'){
           this.monthlyFlag = false;
+          this.halfyearlyFlag = false;
+          this.yearlyFlag = false;
           this.quarterlyFlag = true;
           this.paymentOption = true;
         }
         if(this.paymentMode == 'HALF YEARLY'){
           this.halfyearlyFlag = true;
+          this.monthlyFlag = false;
+          this.quarterlyFlag = false;
+          this.yearlyFlag = false;
+          this.paymentOption = true;
+        }
+        if(this.paymentMode == 'YEARLY'){
+          this.yearlyFlag = true;
+          this.halfyearlyFlag = false;
+          this.monthlyFlag = false;
+          this.quarterlyFlag = false;
           this.paymentOption = true;
         }
         
@@ -104,11 +124,13 @@ export class LifedetailsPage implements OnInit {
           this.lapsedMessage = false;
           this.payupButton = true;
         }
+        this.calculateInstallment();
       },
       err => {
         console.log("Error fetching data");
       }
     );
+    
   }
 
   presentLoadingDefault() {
@@ -123,7 +145,7 @@ export class LifedetailsPage implements OnInit {
     }, 500);
   }
 
-  calculateInstallment(value){
+  calculateInstallment(){
     
     // if(value != 's'){
        //console.log(this.installment);
@@ -132,6 +154,9 @@ export class LifedetailsPage implements OnInit {
       //  }
        
     // }
+    if(this.installment == undefined){
+      this.installment = 1;
+    }
     this.premiumAmount = this.premiumAmount.replace(',', '');
     this.amountToPay = this.premiumAmount * this.installment;    
   }
@@ -152,6 +177,7 @@ export class LifedetailsPage implements OnInit {
     }
     else{
       var orderNo = Math.floor(1000000000 + Math.random() * 9000000000);
+      //this.amountToPay=1;
       this.insertPayment(orderNo);
       let alert = this.alertCtrl.create({
         title: 'Confirm Your Payment',    
@@ -160,12 +186,43 @@ export class LifedetailsPage implements OnInit {
           {
             text: 'OK',
             handler: () => {
-              this.paymentUrl = "https://apps.ricb.bt:8443/paymentgateway/ARapps.jsp?amtToPay="+this.amountToPay+
-              "&id=C&policy_no="+this.polNo+"&order_No="+orderNo;
+              ////this.paymentUrl = "https://apps.ricb.com.bt:8443/paymentgateway/ARapps.jsp?amtToPay="+this.amountToPay+
+              ////"&id=C&policy_no="+this.polNo+"&order_No="+orderNo;
               //let target = "_self";
               //this.inAppBrowser.create(this.paymentUrl, target, 'location=false');
               
-              this.navCtrl.push(PaymentPage, {param: this.paymentUrl, type: "payment"});
+              ////////this.navCtrl.push(PaymentPage, {param: this.paymentUrl, type: "payment"});
+
+              
+              this.sendRequest(this.amountToPay).then(data=>
+                {
+                  this.finalcs=data.toString();
+                  //console.log("Before split "+this.finalcs);
+                  this.checksumComp=this.finalcs.split("&");
+                  //console.log(this.checksumComp);
+                  let txnId:string[]=this.checksumComp[0].split("=");
+                  console.log(txnId);
+                  let status:string[]=this.checksumComp[1].split("=");
+                  if(status[1]=="Success"){
+                    let bankList:string[]=this.checksumComp[2].split("=");
+                    //console.log(bankList);
+                    let bankList1:string[]=bankList[1].split("~");
+                    //console.log(bankList1);
+                    let bankList2:string[]=bankList[1].split("#");
+                    //console.log(bankList2);
+                    for(let i =0; i<bankList2.length; i++){
+                       
+                      this.finalBankList.push({value: bankList2[i].split("~")[0], text: bankList2[(i)].split("~")[1]});
+                      //console.log(this.finalBankList); 
+                    }
+
+                    this.navCtrl.push(BanklistPage, {param: this.finalBankList, txnId: txnId[1], orderNo: orderNo, 
+                      cidNo: this.cidNo, policyNo: this.polNo, amount: this.amountToPay, type: 'life'});
+                    this.presentLoadingDefault();
+                  }
+                  
+                 
+                });
             }
           }
         ]
@@ -174,9 +231,26 @@ export class LifedetailsPage implements OnInit {
     }
   }
 
+  sendRequest(amtToPay){
+    let opt: RequestOptions;
+    let myHeaders: Headers = new Headers;
+    
+    myHeaders.set('Accept','application/json; charset-utf-8');
+    myHeaders.append('Content-type', 'apaplication/json; charset-utf-8');
+    
+
+    return new Promise(resolve => {
+      this.http.post(this.baseUrl+'/paymentrequest?messagetype=AR&amount='+amtToPay+
+    '&email=feedback@ricb.bt',opt).map(res => res.text()).subscribe(data =>{ 
+    //console.log("data is "+data);
+      resolve(data); 
+      });
+    });
+  }
+
   insertPayment(orderNo){
     console.log('insertpayment');
-    this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
+    this.baseUrl = 'http://apps.ricb.bt:8080/ricbapi/api/ricb';
 
     this.http.get(this.baseUrl+'/insertLifePayment?cidNo='+this.cidNo+'&custName='+this.custName+'&deptCode='+this.deptCode+'&policyNo='+this.policyNo+'&amount='+this.premiumAmount+'&orderNo='+orderNo+'&remitterCid='+this.remitterCid).map(res => res.json()).subscribe(
       data => {

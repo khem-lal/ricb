@@ -3,11 +3,12 @@ import { NavController, LoadingController, AlertController, Platform, ToastContr
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RegistrationPage } from '../registration/registration';
 import { DashboardPage } from '../dashboard/dashboard';
-import { Http } from '@angular/http';
+import { Http, RequestOptions } from '@angular/http';
 import { CallNumber } from '@ionic-native/call-number';
 import { ForgotpasswordPage } from '../forgotpassword/forgotpassword';
 import { SqliteProvider } from '../../providers/sqlite/sqlite';
 import { Network } from '@ionic-native/network';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 
 @Component({
   selector: 'page-home',
@@ -24,13 +25,15 @@ export class HomePage {
   alertPresented: any;
   sqliteData: any;
   hasCid: boolean = false;
+  inAppVersion: any;
   
 
   constructor(public navCtrl: NavController, public formBuilder: FormBuilder, public http: Http, public platform: Platform,
     public loadingCtrl: LoadingController, private network: Network, public alertCtrl: AlertController, 
     private callNumber: CallNumber, public sqliteprovider: SqliteProvider, public toastCtrl: ToastController, 
-    private nav: Nav, public events: Events) {
+    private nav: Nav, public events: Events, public appVersion: AppVersion) {
     this.events.publish('userloggedout');
+      
     this.registrationForm = this.formBuilder.group({
       cidNo: ['', Validators.required],
       password: ['', Validators.required]
@@ -38,6 +41,58 @@ export class HomePage {
     //this.noCid = true;
     //get cid if the user is registered
     this.platform.ready().then(() => {
+      //check for app version for updating
+      //this.inAppVersion = this.appVersion.getVersionNumber();
+      
+      /*if (this.platform.is('cordova')) {
+        this.appVersion.getVersionNumber().then(
+           (v) => { this.inAppVersion = v;
+            console.log("App Version check is "+this.inAppVersion);
+          }
+        );
+      }*/
+      /*let opt: RequestOptions;
+      let myHeaders: Headers = new Headers;
+    
+      myHeaders.set('Accept','application/json; charset-utf-8');
+      myHeaders.append('Content-type', 'apaplication/json; charset-utf-8');
+        this.http.get('config.xml',opt).subscribe(
+        data => {
+          console.log("data is ============>" +data);
+        });*/
+        
+      /* this.baseUrl = 'http://apps.ricb.bt:8080/ricbapi/api/ricb';
+
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      this.headers = {headers};
+
+      this.http.get(this.baseUrl+'/appversion', this.headers).map(res => res.json()).subscribe(
+        data => {
+          
+          if(data == ''){
+            let alert = this.alertCtrl.create({
+              cssClass:'error',
+              subTitle: 'No data available.',
+              buttons: [
+                {
+                  text: 'OK',
+                  handler: () => {
+                    this.navCtrl.push(HomePage);
+                  }
+                }
+              ]
+            }); 
+            alert.present();
+          }
+          else{
+            //update app
+          }
+        },
+        err => {
+          console.log("Error fetching data");
+        }
+      ); */
       //get cid
       this.sqliteprovider.getRegisteredCID().then(res => {
         if(res){
@@ -63,9 +118,9 @@ export class HomePage {
 
     platform.registerBackButtonAction((event) =>{
       let view = this.nav.getActive();
-      console.log(view.component.name);
       if (view.component.name == "HomePage") {
-        platform.exitApp();
+        //platform.exitApp();
+        navigator['app'].exitApp();   
       }
       else{
         nav.pop();
@@ -100,7 +155,7 @@ export class HomePage {
 
   getAdImage(){
     
-    this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
+    this.baseUrl = 'http://apps.ricb.bt:8080/ricbapi/api/ricb';
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -146,15 +201,17 @@ export class HomePage {
     if(this.registrationForm.valid){
       this.ionViewDidLoad();
       this.presentLoadingDefault();
-      this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
+      this.baseUrl = 'http://apps.ricb.bt:8080/ricbapi/api/ricb';
 
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
+      //headers.append('Authorization', 'Basic' + ('udorji:admin'));
       this.headers = {headers};
 
-      
+      //this.http.post('http://103.80.110.239:8080/dms/mobileLogin', this.headers).map(res => res.json()).subscribe(
       this.http.get(this.baseUrl+'/validatePassword?cidNumber='+this.cidNo+'&password='+this.password, this.headers).map(res => res.json()).subscribe(
         data => {
+          //console.log(data);
           this.status = data[0].status;
           if(this.status==1){
             //check if user exists in sqlite
@@ -179,7 +236,7 @@ export class HomePage {
               ]
             }); 
             alert.present();
-          }
+          } 
         },
         err => {
           console.log("Error fetching data");

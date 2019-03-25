@@ -41,7 +41,7 @@ export class ForgotpasswordPage {
   updatePassword(){
     
       this.presentLoadingDefault();
-      this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
+      this.baseUrl = 'http://apps.ricb.bt:8080/ricbapi/api/ricb';
 
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
@@ -99,7 +99,7 @@ export class ForgotpasswordPage {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       this.headers = {headers};
-      this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
+      this.baseUrl = 'http://apps.ricb.bt:8080/ricbapi/api/ricb';
 
       this.http.get(this.baseUrl+'/forgotpasswordotp?cidNumber='+this.cidNumber+'&otp='+otp, this.headers).map(res => res.json()).subscribe(
           data => {
@@ -132,7 +132,7 @@ export class ForgotpasswordPage {
 
   verifyOTP(){
     this.presentLoadingDefault();
-    this.baseUrl = 'https://apps.ricb.bt:8443/ricbapi/api/ricb';
+    this.baseUrl = 'http://apps.ricb.bt:8080/ricbapi/api/ricb';
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
